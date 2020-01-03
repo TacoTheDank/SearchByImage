@@ -1,18 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
-
-    dataBinding {
-        enabled = true
-    }
+    compileSdkVersion 28
+    buildToolsVersion "29.0.2"
 
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 20200
-
+        versionName "2.0.2"
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -23,51 +19,69 @@ android {
         }
     }
 
+    flavorDimensions "source"
     productFlavors {
-        def String name = "2.0.1"
-
         coolapk {
             applicationId "rikka.searchbyimage"
-            versionName name
             buildConfigField "boolean", "hideOtherEngine", "false"
         }
-
         google {
             applicationId "rikka.searchbyimage2"
-            versionName name + "-play"
+            versionNameSuffix "-play"
             buildConfigField "boolean", "hideOtherEngine", "true"
         }
     }
 
     applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
-                output.outputFile = file("${output.outputFile.parent}/searchbyimage" +
-                        "-${variant.buildType.name.toLowerCase()}" +
-                        "-${variant.versionName}" +
-                        ".apk")
-            }
+        variant.outputs.all { output ->
+            outputFileName = "${variant.buildType.name.toLowerCase()}" + "-${variant.versionName}" + ".apk"
         }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        encoding = 'UTF-8'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        disable 'GoogleAppIndexingWarning'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/*'
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile "com.android.support:customtabs:25.1.0"
-    compile 'com.android.support:design:25.1.0'
-    compile 'com.android.support:cardview-v7:25.1.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.squareup.okhttp3:okhttp:3.5.0'
-    compile 'io.reactivex:rxjava:1.2.3'
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar'
-    compile 'com.github.RikkaW:MaterialPreference:v1.4.4'
-    compile project(':cropper')
+    implementation 'com.android.support:customtabs:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:exifinterface:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:support-compat:28.0.0'
 
-    compile 'com.google.firebase:firebase-core:10.0.1'
-    compile 'com.google.firebase:firebase-crash:10.0.1'
+    //https://github.com/bumptech/glide/releases
+    implementation 'com.github.bumptech.glide:glide:3.8.0'
+
+    //https://square.github.io/okhttp/changelog_3x/
+    implementation 'com.squareup.okhttp3:okhttp:3.6.0'
+
+    //https://github.com/ReactiveX/RxJava/blob/1.x/CHANGES.md
+    implementation 'io.reactivex:rxjava:1.2.6'
+    //https://github.com/ReactiveX/RxAndroid/blob/1.x/CHANGES.md
+    implementation 'io.reactivex:rxandroid:1.2.1'
+
+    //https://github.com/ArthurHub/Android-Image-Cropper/releases
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.7'
+
+    //https://github.com/tbruyelle/RxPermissions/releases
+    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar'
+
+    //https://github.com/RikkaW/MaterialPreference
+    implementation 'com.github.RikkaW:MaterialPreference:v1.4.4'
 }
-
-apply plugin: 'com.google.gms.google-services'
