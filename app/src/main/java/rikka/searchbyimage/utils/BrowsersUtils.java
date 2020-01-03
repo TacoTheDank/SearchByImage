@@ -83,13 +83,6 @@ public class BrowsersUtils {
         }
     }
 
-    private static class WebViewFallback implements CustomTabActivityHelper.CustomTabFallback {
-        @Override
-        public void openUri(Activity activity, Uri uri) {
-            openWebView(activity, uri, false, null);
-        }
-    }
-
     public static void openWebView(Activity activity, Uri uri, boolean newTask, UploadResult result) {
         Intent intent = new Intent(activity, WebViewActivity.class);
         if (newTask) {
@@ -124,5 +117,12 @@ public class BrowsersUtils {
         }
         intent.setData(uri);
         IntentUtils.startOtherActivity(activity, intent);
+    }
+
+    private static class WebViewFallback implements CustomTabActivityHelper.CustomTabFallback {
+        @Override
+        public void openUri(Activity activity, Uri uri) {
+            openWebView(activity, uri, false, null);
+        }
     }
 }

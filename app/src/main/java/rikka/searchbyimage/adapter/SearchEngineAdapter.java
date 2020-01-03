@@ -22,24 +22,18 @@ import rikka.searchbyimage.staticdata.SearchEngine;
  * Created by Rikka on 2016/1/24.
  */
 public class SearchEngineAdapter extends RecyclerView.Adapter<SearchEngineAdapter.ViewHolder> {
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position, SearchEngine item);
-
-        void onItemLongClick(View view, int position, SearchEngine item);
-    }
-
-    /**
-     * interface to show message in UI
-     */
-    public interface ShowMessage {
-        /**
-         * show "at least select one engine" message
-         */
-        void showNoLessThanOne();
-    }
-
+    private static final int VIEW_TYPE_ITEM = 1;
+    private static final int VIEW_TYPE_HEADER_BUILT_IN = 1 << 1;
+    private static final int VIEW_TYPE_HEADER_CUSTOM = 1 << 2;
+    private static final int VIEW_TYPE_EMPTY = 1 << 3;
+    private static final int BUILT_IN_ENGINES = (BuildConfig.hideOtherEngine ? 1 : 6);
     protected OnItemClickListener mOnItemClickListener;
     protected ShowMessage showMessage;
+    private List<SearchEngine> mData;
+
+    public SearchEngineAdapter(List<SearchEngine> data) {
+        mData = data;
+    }
 
     public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
@@ -47,12 +41,6 @@ public class SearchEngineAdapter extends RecyclerView.Adapter<SearchEngineAdapte
 
     public void setShowMessage(ShowMessage showMessage) {
         this.showMessage = showMessage;
-    }
-
-    private List<SearchEngine> mData;
-
-    public SearchEngineAdapter(List<SearchEngine> data) {
-        mData = data;
     }
 
     @Override
@@ -63,14 +51,6 @@ public class SearchEngineAdapter extends RecyclerView.Adapter<SearchEngineAdapte
 
         return new ViewHolder(itemView);
     }
-
-
-    private static final int VIEW_TYPE_ITEM = 1;
-    private static final int VIEW_TYPE_HEADER_BUILT_IN = 1 << 1;
-    private static final int VIEW_TYPE_HEADER_CUSTOM = 1 << 2;
-    private static final int VIEW_TYPE_EMPTY = 1 << 3;
-
-    private static final int BUILT_IN_ENGINES = (BuildConfig.hideOtherEngine ? 1 : 6);
 
     @Override
     public int getItemViewType(int position) {
@@ -114,6 +94,22 @@ public class SearchEngineAdapter extends RecyclerView.Adapter<SearchEngineAdapte
             }
         }
         return enabledNumber;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position, SearchEngine item);
+
+        void onItemLongClick(View view, int position, SearchEngine item);
+    }
+
+    /**
+     * interface to show message in UI
+     */
+    public interface ShowMessage {
+        /**
+         * show "at least select one engine" message
+         */
+        void showNoLessThanOne();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -166,6 +162,11 @@ public class SearchEngineAdapter extends RecyclerView.Adapter<SearchEngineAdapte
                 return viewType;
             }
 
+            public void setViewType(int viewType) {
+                this.viewType = viewType;
+                pcr.notifyChange(this, BR.viewType);
+            }
+
             @Bindable
             public boolean getNeedEmptyView() {
                 return (viewType & VIEW_TYPE_EMPTY) != 0;
@@ -174,11 +175,6 @@ public class SearchEngineAdapter extends RecyclerView.Adapter<SearchEngineAdapte
             @Bindable
             public boolean getNeedDivider() {
                 return needDivider;
-            }
-
-            public void setViewType(int viewType) {
-                this.viewType = viewType;
-                pcr.notifyChange(this, BR.viewType);
             }
 
             @Override
@@ -193,8 +189,6 @@ public class SearchEngineAdapter extends RecyclerView.Adapter<SearchEngineAdapte
         }
 
         public class Listener implements Observable {
-
-            private PropertyChangeRegistry pcr = new PropertyChangeRegistry();
 
             public SwitchCompat.OnCheckedChangeListener switchCheckedChangeListener = new SwitchCompat.OnCheckedChangeListener() {
                 @Override
@@ -213,7 +207,6 @@ public class SearchEngineAdapter extends RecyclerView.Adapter<SearchEngineAdapte
                     }
                 }
             };
-
             public View.OnClickListener viewOnClick = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -233,6 +226,7 @@ public class SearchEngineAdapter extends RecyclerView.Adapter<SearchEngineAdapte
                     return false;
                 }
             };
+            private PropertyChangeRegistry pcr = new PropertyChangeRegistry();
 
             @Override
             public void addOnPropertyChangedCallback(OnPropertyChangedCallback callback) {

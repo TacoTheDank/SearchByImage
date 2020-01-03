@@ -1,14 +1,13 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:descendantFocusability="beforeDescendants"
+    android:fitsSystemWindows="true"
     android:focusableInTouchMode="true"
-    tools:context=".ui.EditSiteInfoActivity"
-    android:id="@+id/coordinatorLayout">
+    tools:context=".ui.EditSiteInfoActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -17,19 +16,19 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            app:titleMarginStart="18dp"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:title="@string/edit_site"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleMarginStart="18dp" />
 
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollView"
         android:theme="@style/EditInfoEditText"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -41,37 +40,37 @@
                 android:id="@+id/textInupt_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:layout_marginTop="16dp"
                 android:paddingBottom="8dp">
 
                 <EditText
+                    android:id="@+id/edit_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edit_name"
-                    android:hint="@string/engine_name"
                     android:layout_gravity="center_vertical"
-                    android:textSize="28sp"
-                    android:maxLines="1" />
+                    android:hint="@string/engine_name"
+                    android:maxLines="1"
+                    android:textSize="28sp" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInput_url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/textInupt_name"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:layout_below="@+id/textInupt_name"
                 android:paddingBottom="8dp">
 
                 <EditText
+                    android:id="@+id/edit_url"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edit_url"
-                    android:inputType="textUri"
-                    android:hint="@string/request_url"
                     android:layout_gravity="center_vertical"
+                    android:hint="@string/request_url"
+                    android:inputType="textUri"
                     android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
 
@@ -79,21 +78,20 @@
                 android:id="@+id/dropDown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
                 android:layout_below="@+id/textInput_url"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                app:myTitle="@string/open_action">
-            </rikka.searchbyimage.widget.DropDown>
+                android:layout_alignParentLeft="true"
+                android:background="?attr/selectableItemBackground"
+                app:myTitle="@string/open_action"></rikka.searchbyimage.widget.DropDown>
 
             <TextView
+                android:id="@+id/post_form_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/dropDown"
-                android:text="@string/post_form"
-                android:id="@+id/post_form_title"
-                android:paddingLeft="20dp"
                 android:layout_marginTop="8dp"
+                android:paddingLeft="20dp"
+                android:text="@string/post_form"
                 android:textSize="12sp" />
 
             <LinearLayout
@@ -101,34 +99,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/post_form_title"
+                android:orientation="horizontal"
                 android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:orientation="horizontal">
+                android:paddingRight="16dp">
 
                 <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:id="@+id/edit_file_key"
-                    android:hint="@string/upload_form_key"
-                    android:inputType="textEmailAddress|textNoSuggestions"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:layout_gravity="center_vertical" />
+                    android:hint="@string/upload_form_key"
+                    android:inputType="textEmailAddress|textNoSuggestions" />
 
                 <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_weight="1"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_weight="1"
                     android:enabled="false"
                     android:text="@string/upload_form_your_image" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/recyclerView"
                 android:layout_below="@id/linearLayout_form">
 
             </android.support.v7.widget.RecyclerView>

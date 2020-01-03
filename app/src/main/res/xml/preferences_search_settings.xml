@@ -1,87 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:key="screen">
 
     <PreferenceCategory
-        android:title="@string/baidu_settings"
         android:key="category_baidu"
-        android:order="3">
+        android:order="3"
+        android:title="@string/baidu_settings">
         <Preference
             android:key="preference_notice"
-            android:title="@string/notice"
-            android:summary="@string/notice_baidu"/>
+            android:summary="@string/notice_baidu"
+            android:title="@string/notice" />
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/google_settings"
         android:key="category_google"
-        android:order="3">
+        android:order="3"
+        android:title="@string/google_settings">
 
         <SwitchPreference
+            android:defaultValue="false"
             android:key="safe_search_preference"
             android:summary="@string/safe_search_summary"
-            android:title="@string/safe_search"
-            android:defaultValue="false"/>
+            android:title="@string/safe_search" />
 
         <SimpleMenuPreference
-            android:key="google_region_preference"
-            android:title="@string/google_region_redirect"
-            android:summary="%s"
+            android:defaultValue="0"
             android:entries="@array/google_region_redirects"
             android:entryValues="@array/google_region_redirect_value"
-            android:defaultValue="0"/>
+            android:key="google_region_preference"
+            android:summary="%s"
+            android:title="@string/google_region_redirect" />
 
         <EditTextPreference
+            android:defaultValue="www.google.com"
             android:key="google_region"
-            android:title="@string/google_region_redirect_custom"
-            android:defaultValue= "www.google.com"
             android:singleLine="true"
             android:summary="%s"
-            app:commitOnEnter="true"/>
+            android:title="@string/google_region_redirect_custom"
+            app:commitOnEnter="true" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/iqdb_settings"
         android:key="category_iqdb"
-        android:order="3">
+        android:order="3"
+        android:title="@string/iqdb_settings">
 
         <MultiSelectListPreference
-            android:key="iqdb_service"
-            android:title="@string/iqdb_service_select"
+            android:defaultValue="@array/iqdb_service_id_default"
             android:entries="@array/iqdb_service_title"
             android:entryValues="@array/iqdb_service_id"
-            android:defaultValue="@array/iqdb_service_id_default"/>
+            android:key="iqdb_service"
+            android:title="@string/iqdb_service_select" />
 
         <SwitchPreference
+            android:defaultValue="false"
             android:key="iqdb_forcegray"
-            android:title="@string/iqdb_forcegray"
-            android:defaultValue="false"/>
+            android:title="@string/iqdb_forcegray" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/saucenao_settings"
         android:key="category_saucenao"
-        android:order="3">
+        android:order="3"
+        android:title="@string/saucenao_settings">
 
         <SimpleMenuPreference
-            android:key="saucenao_hide"
-            android:title="@string/saucenao_hide_title"
-            android:summary="%s"
+            android:defaultValue="0"
             android:entries="@array/saucenao_hide"
             android:entryValues="@array/saucenao_hide_value"
-            android:defaultValue="0"/>
+            android:key="saucenao_hide"
+            android:summary="%s"
+            android:title="@string/saucenao_hide_title" />
 
         <SimpleMenuPreference
-            android:key="saucenao_database"
-            android:title="@string/saucenao_database_title"
-            android:summary="%s"
+            android:defaultValue="999"
             android:entries="@array/saucenao_database"
             android:entryValues="@array/saucenao_database_value"
-            android:defaultValue="999"/>
+            android:key="saucenao_database"
+            android:summary="%s"
+            android:title="@string/saucenao_database_title" />
 
     </PreferenceCategory>
 

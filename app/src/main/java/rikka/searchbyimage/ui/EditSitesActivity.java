@@ -21,24 +21,28 @@ import android.view.View;
 import java.util.List;
 
 import rikka.searchbyimage.R;
+import rikka.searchbyimage.adapter.SearchEngineAdapter;
 import rikka.searchbyimage.database.DatabaseHelper;
 import rikka.searchbyimage.database.table.CustomEngineTable;
 import rikka.searchbyimage.staticdata.SearchEngine;
-import rikka.searchbyimage.adapter.SearchEngineAdapter;
 
 public class EditSitesActivity extends BaseActivity {
+    static SearchEngineAdapter mAdapter;
     Activity mActivity;
-
     DatabaseHelper mDbHelper;
-
     CoordinatorLayout mCoordinatorLayout;
-
     Toolbar mToolbar;
     FloatingActionButton mFAB;
     RecyclerView mRecyclerView;
-    static SearchEngineAdapter mAdapter;
-
     List<SearchEngine> mData;
+
+    public static synchronized SearchEngineAdapter getAdapter(Context context) {
+        if (mAdapter == null) {
+            mAdapter = new SearchEngineAdapter(SearchEngine.getList(context));
+        }
+
+        return mAdapter;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,14 +194,6 @@ public class EditSitesActivity extends BaseActivity {
                 Snackbar.make(mCoordinatorLayout, R.string.choose_one, Snackbar.LENGTH_LONG).show();
             }
         });
-    }
-
-    public static synchronized SearchEngineAdapter getAdapter(Context context) {
-        if (mAdapter == null) {
-            mAdapter = new SearchEngineAdapter(SearchEngine.getList(context));
-        }
-
-        return mAdapter;
     }
 
     private void delete(int id) {

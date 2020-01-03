@@ -27,17 +27,17 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import rikka.searchbyimage.staticdata.SearchEngine;
-import rikka.searchbyimage.staticdata.SearchEngineParcelable;
-import rikka.searchbyimage.widget.MyLinearLayoutManager;
-import rikka.searchbyimage.widget.DropDown;
 import rikka.searchbyimage.BuildConfig;
 import rikka.searchbyimage.R;
+import rikka.searchbyimage.adapter.PostFormAdapter;
 import rikka.searchbyimage.database.DatabaseHelper;
 import rikka.searchbyimage.database.table.CustomEngineTable;
-import rikka.searchbyimage.adapter.PostFormAdapter;
-import rikka.searchbyimage.utils.ParcelableUtils;
+import rikka.searchbyimage.staticdata.SearchEngine;
+import rikka.searchbyimage.staticdata.SearchEngineParcelable;
 import rikka.searchbyimage.utils.BrowsersUtils;
+import rikka.searchbyimage.utils.ParcelableUtils;
+import rikka.searchbyimage.widget.DropDown;
+import rikka.searchbyimage.widget.MyLinearLayoutManager;
 
 public class EditSiteInfoActivity extends BaseActivity {
     public static final String EXTRA_EDIT_LOCATION =
@@ -245,7 +245,7 @@ public class EditSiteInfoActivity extends BaseActivity {
             //mFormTitle.setTextColor(ContextCompat.getColor(mActivity, R.color.colorPrimary));
             mFormTitle.setTextColor(ContextCompat.getColor(mActivity, R.color.colorAccent));
         } else {
-            mFormTitle.setTextColor(ContextCompat.getColor(mActivity, R.color.primary_text  ));
+            mFormTitle.setTextColor(ContextCompat.getColor(mActivity, R.color.primary_text));
         }
     }
 

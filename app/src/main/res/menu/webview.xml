@@ -1,5 +1,4 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/menu_item_refresh"
@@ -7,9 +6,8 @@
 
     <item
         android:id="@+id/menu_item_share"
-        android:title="@string/share"
-        android:actionProviderClass=
-            "android.widget.ShareActionProvider" />
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        android:title="@string/share" />
 
     <item
         android:id="@+id/menu_item_copy_link"

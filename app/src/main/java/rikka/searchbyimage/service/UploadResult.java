@@ -16,7 +16,17 @@ public class UploadResult implements Parcelable {
     public final static int ERROR_TIMEOUT = 3;
     public final static int ERROR_IO = 4;
     public final static int ERROR_UNKNOWN = 5;
+    public static final Parcelable.Creator<UploadResult> CREATOR = new Parcelable.Creator<UploadResult>() {
+        @Override
+        public UploadResult createFromParcel(Parcel in) {
+            return new UploadResult(in);
+        }
 
+        @Override
+        public UploadResult[] newArray(int size) {
+            return new UploadResult[size];
+        }
+    };
     private final int mEngineId;
     private final String mFileUri;
     private final String mFilename;
@@ -25,6 +35,39 @@ public class UploadResult implements Parcelable {
     private final int mResultOpenAction;
     private final int mErrorCode;
     private final String mErrorMessage;
+
+    public UploadResult(int engineId, String fileUri, String filename, String url, String htmlUri, int resultOpenAction) {
+        mEngineId = engineId;
+        mFileUri = fileUri;
+        mFilename = filename;
+        mUrl = url;
+        mHtmlUri = htmlUri;
+        mResultOpenAction = resultOpenAction;
+        mErrorCode = NO_ERROR;
+        mErrorMessage = null;
+    }
+
+    public UploadResult(int errorCode, String errorMessage, UploadParam param) {
+        mErrorCode = errorCode;
+        mErrorMessage = errorMessage;
+        mEngineId = param == null ? 0 : param.getEngineId();
+        mFileUri = param == null ? null : param.getFileUri();
+        mFilename = param == null ? null : param.getFilename();
+        mUrl = null;
+        mHtmlUri = null;
+        mResultOpenAction = 0;
+    }
+
+    public UploadResult(Parcel in) {
+        mErrorCode = in.readInt();
+        mErrorMessage = mErrorCode != 0 ? in.readString() : null;
+        mEngineId = in.readInt();
+        mFileUri = in.readString();
+        mFilename = in.readString();
+        mUrl = in.readString();
+        mHtmlUri = in.readString();
+        mResultOpenAction = in.readInt();
+    }
 
     public int getEngineId() {
         return mEngineId;
@@ -58,28 +101,6 @@ public class UploadResult implements Parcelable {
         return mErrorMessage;
     }
 
-    public UploadResult(int engineId, String fileUri, String filename, String url, String htmlUri, int resultOpenAction) {
-        mEngineId = engineId;
-        mFileUri = fileUri;
-        mFilename = filename;
-        mUrl = url;
-        mHtmlUri = htmlUri;
-        mResultOpenAction = resultOpenAction;
-        mErrorCode = NO_ERROR;
-        mErrorMessage = null;
-    }
-
-    public UploadResult(int errorCode, String errorMessage, UploadParam param) {
-        mErrorCode = errorCode;
-        mErrorMessage = errorMessage;
-        mEngineId = param == null ? 0 : param.getEngineId();
-        mFileUri = param == null ? null : param.getFileUri();
-        mFilename = param == null ? null : param.getFilename();
-        mUrl = null;
-        mHtmlUri = null;
-        mResultOpenAction = 0;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -98,28 +119,4 @@ public class UploadResult implements Parcelable {
         dest.writeString(mHtmlUri);
         dest.writeInt(mResultOpenAction);
     }
-
-    public UploadResult(Parcel in) {
-        mErrorCode = in.readInt();
-        mErrorMessage = mErrorCode != 0 ? in.readString() : null;
-        mEngineId = in.readInt();
-        mFileUri = in.readString();
-        mFilename = in.readString();
-        mUrl = in.readString();
-        mHtmlUri = in.readString();
-        mResultOpenAction = in.readInt();
-    }
-
-
-    public static final Parcelable.Creator<UploadResult> CREATOR = new Parcelable.Creator<UploadResult>() {
-        @Override
-        public UploadResult createFromParcel(Parcel in) {
-            return new UploadResult(in);
-        }
-
-        @Override
-        public UploadResult[] newArray(int size) {
-            return new UploadResult[size];
-        }
-    };
 }

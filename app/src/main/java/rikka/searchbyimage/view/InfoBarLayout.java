@@ -2,8 +2,6 @@ package rikka.searchbyimage.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -11,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import rikka.searchbyimage.R;
 
@@ -19,12 +16,7 @@ import rikka.searchbyimage.R;
  * Created by Rikka on 2016/1/18.
  */
 public class InfoBarLayout extends FrameLayout {
-    public interface OnLayoutChangeListener {
-        void onLayoutChange(View view, int left, int top, int right, int bottom);
-    }
-
     private OnLayoutChangeListener mOnLayoutChangeListener;
-
     private Drawable mLineDrawable;
 
     public InfoBarLayout(Context context) {
@@ -57,5 +49,9 @@ public class InfoBarLayout extends FrameLayout {
             mLineDrawable.setBounds(0, 0, canvas.getWidth(), 2);
             mLineDrawable.draw(canvas);
         }
+    }
+
+    public interface OnLayoutChangeListener {
+        void onLayoutChange(View view, int left, int top, int right, int bottom);
     }
 }

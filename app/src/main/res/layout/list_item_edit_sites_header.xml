@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="32dp"
-              android:background="@android:color/white"
-              android:elevation="0dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="32dp"
+    android:background="@android:color/white"
+    android:elevation="0dp"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/item_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:text="New Text"
+        android:layout_marginBottom="2dp"
+        android:fontFamily="sans-serif-medium"
         android:gravity="bottom"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:layout_marginBottom="2dp"
         android:textSize="14sp"
-        android:fontFamily="sans-serif-medium"/>
+        tools:text="New Text" />
 </LinearLayout>

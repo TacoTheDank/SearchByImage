@@ -22,21 +22,15 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
     private ArrayList<IqdbResultCollecter.IqdbItem> mData;
     private int mCount = 0;
-
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position, IqdbResultCollecter.IqdbItem item);
-        void onItemLongClick(View view , int position, IqdbResultCollecter.IqdbItem item);
-    }
-
     private OnItemClickListener mOnItemClickListener;
-
-    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
-        this.mOnItemClickListener = mOnItemClickListener;
-    }
 
     public ResultAdapter(ArrayList<IqdbResultCollecter.IqdbItem> mData) {
         this.mData = mData;
         this.mCount = mData.size();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
     }
 
     @Override
@@ -60,21 +54,17 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                 .into(holder.mImageView);
 
         if (mOnItemClickListener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener()
-            {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
+                public void onClick(View v) {
                     int pos = holder.getLayoutPosition();
                     mOnItemClickListener.onItemClick(holder.itemView, pos, mData.get(pos));
                 }
             });
 
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener()
-            {
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public boolean onLongClick(View v)
-                {
+                public boolean onLongClick(View v) {
                     int pos = holder.getLayoutPosition();
                     mOnItemClickListener.onItemLongClick(holder.itemView, pos, mData.get(pos));
                     return false;
@@ -86,6 +76,12 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return mCount;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position, IqdbResultCollecter.IqdbItem item);
+
+        void onItemLongClick(View view, int position, IqdbResultCollecter.IqdbItem item);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

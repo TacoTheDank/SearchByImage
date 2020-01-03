@@ -15,6 +15,36 @@ public class ResultActivity extends BaseActivity {
     public static final String EXTRA_RESULT =
             "rikka.searchbyimage.ui.ResultActivity.EXTRA_RESULT";
 
+    private static void openIqdbResult(Context context, UploadResult result) {
+        Intent intent = new Intent(context, IqdbResultActivity.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        } else {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(IqdbResultActivity.EXTRA_RESULT, result);
+        intent.putExtra(IqdbResultActivity.EXTRA_FILE, result.getHtmlUri());
+
+        context.startActivity(intent);
+    }
+
+    private static void openHTMLinWebView(Context context, UploadResult result) {
+        Intent intent = new Intent(context, WebViewActivity.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        } else {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(WebViewActivity.EXTRA_RESULT, result);
+        intent.putExtra(WebViewActivity.EXTRA_FILE, result.getHtmlUri());
+
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,35 +77,5 @@ public class ResultActivity extends BaseActivity {
         if (!getIntent().hasExtra(EXTRA_RESULT)) {
             finish();
         }
-    }
-
-    private static void openIqdbResult(Context context, UploadResult result) {
-        Intent intent = new Intent(context, IqdbResultActivity.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        } else {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(IqdbResultActivity.EXTRA_RESULT, result);
-        intent.putExtra(IqdbResultActivity.EXTRA_FILE, result.getHtmlUri());
-
-        context.startActivity(intent);
-    }
-
-    private static void openHTMLinWebView(Context context, UploadResult result) {
-        Intent intent = new Intent(context, WebViewActivity.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        } else {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(WebViewActivity.EXTRA_RESULT, result);
-        intent.putExtra(WebViewActivity.EXTRA_FILE, result.getHtmlUri());
-
-        context.startActivity(intent);
     }
 }

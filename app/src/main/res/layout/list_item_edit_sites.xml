@@ -1,6 +1,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -35,13 +35,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
                 android:layout_marginBottom="2dp"
-                android:paddingLeft="@dimen/item_padding"
-                android:paddingRight="@dimen/item_padding"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="bottom"
+                android:paddingLeft="@dimen/item_padding"
+                android:paddingRight="@dimen/item_padding"
                 android:text="@{LayoutStyle.headText}"
-                android:textSize="14sp"
                 android:textColor="@color/colorAccent"
+                android:textSize="14sp"
                 android:visibility="@{LayoutStyle.needShowHead?View.VISIBLE:View.GONE}"
                 tools:text="Built-in" />
 
@@ -63,18 +63,18 @@
                     android:layout_height="32dp"
                     android:layout_centerVertical="true"
                     android:padding="8dp"
-                    app:srcCompat="@drawable/ic_open_in_new_24dp"
-                    app:imageUrl="@{engine.engineIcon}" />
+                    app:imageUrl="@{engine.engineIcon}"
+                    app:srcCompat="@drawable/ic_open_in_new_24dp" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentEnd="false"
                     android:layout_alignParentStart="false"
                     android:layout_alignParentTop="true"
-                    android:layout_marginLeft="26dp"
+                    android:layout_alignParentEnd="false"
                     android:layout_marginStart="26dp"
+                    android:layout_marginLeft="26dp"
                     android:layout_toEndOf="@id/item_icon"
                     android:layout_toRightOf="@id/item_icon"
                     android:orientation="vertical">
@@ -117,8 +117,8 @@
                 android:id="@+id/fake_divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginLeft="74dp"
                 android:layout_marginStart="74dp"
+                android:layout_marginLeft="74dp"
                 android:background="@color/dividerSearchEngineList"
                 android:visibility="@{LayoutStyle.needDivider?View.VISIBLE:View.GONE}" />
 

@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +26,9 @@ import rikka.searchbyimage.R;
 import rikka.searchbyimage.staticdata.SearchEngine;
 import rikka.searchbyimage.support.Settings;
 import rikka.searchbyimage.utils.ArrayUtils;
-import rikka.searchbyimage.utils.ClipBoardUtils;
+import rikka.searchbyimage.utils.BrowsersUtils;
 import rikka.searchbyimage.utils.CustomTabsHelper;
 import rikka.searchbyimage.utils.IntentUtils;
-import rikka.searchbyimage.utils.BrowsersUtils;
 import rikka.searchbyimage.utils.Utils;
 
 import static rikka.searchbyimage.staticdata.EngineId.SITE_ASCII2D;

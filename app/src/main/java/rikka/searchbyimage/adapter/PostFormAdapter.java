@@ -14,23 +14,30 @@ import rikka.searchbyimage.staticdata.SearchEngine;
  * Created by Rikka on 2016/1/26.
  */
 public class PostFormAdapter extends RecyclerView.Adapter<PostFormAdapter.ViewHolder> {
-    public interface OnFocusChangeListener
-    {
-        void onFocusChange(View view, boolean hasFocus);
-    }
-
-    private OnFocusChangeListener mOnFocusChangeListener;
-
-    public void setOnFocusChangeListener(OnFocusChangeListener mOnFocusChangeListener)
-    {
-        this.mOnFocusChangeListener = mOnFocusChangeListener;
-    }
-
     SearchEngine mData;
     boolean mEnabled;
     PostFormAdapter mAdapter;
     int mCount;
     RecyclerView mRecyclerView;
+    private OnFocusChangeListener mOnFocusChangeListener;
+
+    public PostFormAdapter(SearchEngine data, boolean enabled) {
+        mData = data;
+        mEnabled = enabled;
+        mAdapter = this;
+        mCount = mData.post_text_key.size() + 1;
+    }
+
+    public PostFormAdapter() {
+        mData = new SearchEngine();
+        mEnabled = true;
+        mAdapter = this;
+        mCount = 1;
+    }
+
+    public void setOnFocusChangeListener(OnFocusChangeListener mOnFocusChangeListener) {
+        this.mOnFocusChangeListener = mOnFocusChangeListener;
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -95,20 +102,6 @@ public class PostFormAdapter extends RecyclerView.Adapter<PostFormAdapter.ViewHo
         }
     }
 
-    public PostFormAdapter(SearchEngine data, boolean enabled) {
-        mData = data;
-        mEnabled = enabled;
-        mAdapter = this;
-        mCount = mData.post_text_key.size() + 1;
-    }
-
-    public PostFormAdapter() {
-        mData = new SearchEngine();
-        mEnabled = true;
-        mAdapter = this;
-        mCount = 1;
-    }
-
     @Override
     public int getItemCount() {
         return mCount;
@@ -116,6 +109,10 @@ public class PostFormAdapter extends RecyclerView.Adapter<PostFormAdapter.ViewHo
 
     public void setItemCount(int count) {
         mCount = count;
+    }
+
+    public interface OnFocusChangeListener {
+        void onFocusChange(View view, boolean hasFocus);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

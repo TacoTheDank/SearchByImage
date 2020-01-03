@@ -11,7 +11,7 @@
         <item name="bottomSheetDialogTheme">@style/AppTheme.BottomSheetDialog</item>
     </style>
 
-    <style name="AppTheme.BottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog"/>
+    <style name="AppTheme.BottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog" />
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <!-- Customize your theme here. -->

@@ -38,14 +38,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,7 +52,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
 import java.util.List;
 
 import rikka.searchbyimage.BuildConfig;
@@ -87,7 +84,7 @@ public class WebViewActivity extends BaseResultActivity {
             "https://saucenao.com/", //saucenao
             ""
     };
-
+    private static final int REQUEST_CODE = 0;
     private WebView mWebView;
     private WebSettings mWebSettings;
     private Context mContext;
@@ -96,23 +93,51 @@ public class WebViewActivity extends BaseResultActivity {
     private CoordinatorLayout mCoordinatorLayout;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private InfoBar mInfoBar;
-
     private AppBarLayout.Behavior mBehavior;
-
     private String htmlFilePath;
     private String mImageUrl;
-
     private String baseUrl;
     private int siteId;
-
     private boolean mNormalMode = true;
-
     private DownloadManager mDownloadManager;
     private long downloadReference;
-
     private int intentActivitiesSize;
-
     private File savedFile;
+    MenuItem.OnMenuItemClickListener handler = new MenuItem.OnMenuItemClickListener() {
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case 0: {
+                    ClipBoardUtils.putTextIntoClipboard(mContext, mImageUrl);
+                    Snackbar.make(mCoordinatorLayout, String.format(getString(R.string.copy_to_clipboard), mWebView.getUrl()), Snackbar.LENGTH_SHORT).show();
+                    break;
+                }
+                case 1: {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                            ContextCompat.checkSelfPermission(WebViewActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        getPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                        break;
+                    }
+
+                    startDownload();
+                    break;
+                }
+                case 2: {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mImageUrl));
+                    IntentUtils.startOtherActivity(WebViewActivity.this, intent);
+
+                    break;
+                }
+                case 3: {
+                    mWebView.loadUrl("https://www.google.com/searchbyimage?image_url=" + mImageUrl);
+
+                    break;
+                }
+            }
+            return true;
+        }
+    };
+    private DownloadBroadcastReceiver mDownloadBroadcastReceiver;
+    private boolean toolBarVisibility = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,8 +210,6 @@ public class WebViewActivity extends BaseResultActivity {
         intentActivitiesSize = IntentUtils.getSize(this, new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com")));
     }
 
-    private DownloadBroadcastReceiver mDownloadBroadcastReceiver;
-
     @Override
     protected void onDestroy() {
         if (mDownloadBroadcastReceiver != null) {
@@ -211,9 +234,6 @@ public class WebViewActivity extends BaseResultActivity {
         mWebView.loadUrl(intent.getStringExtra(EXTRA_URL));
         mNormalMode = true;
     }
-
-
-    private boolean toolBarVisibility = true;
 
     private void setToolBarVisibility(boolean visible) {
         if (visible == toolBarVisibility)
@@ -287,8 +307,6 @@ public class WebViewActivity extends BaseResultActivity {
         finish();
         return true;
     }
-
-    private static final int REQUEST_CODE = 0;
 
     private void getPermission(String permission) {
         if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -399,40 +417,6 @@ public class WebViewActivity extends BaseResultActivity {
             Toast.makeText(this, R.string.save_failed, Toast.LENGTH_SHORT).show();
         }
     }
-
-    MenuItem.OnMenuItemClickListener handler = new MenuItem.OnMenuItemClickListener() {
-        public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId()) {
-                case 0: {
-                    ClipBoardUtils.putTextIntoClipboard(mContext, mImageUrl);
-                    Snackbar.make(mCoordinatorLayout, String.format(getString(R.string.copy_to_clipboard), mWebView.getUrl()), Snackbar.LENGTH_SHORT).show();
-                    break;
-                }
-                case 1: {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                            ContextCompat.checkSelfPermission(WebViewActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        getPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                        break;
-                    }
-
-                    startDownload();
-                    break;
-                }
-                case 2: {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mImageUrl));
-                    IntentUtils.startOtherActivity(WebViewActivity.this, intent);
-
-                    break;
-                }
-                case 3: {
-                    mWebView.loadUrl("https://www.google.com/searchbyimage?image_url=" + mImageUrl);
-
-                    break;
-                }
-            }
-            return true;
-        }
-    };
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {

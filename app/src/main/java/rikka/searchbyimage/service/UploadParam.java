@@ -13,6 +13,17 @@ import java.util.List;
 
 public class UploadParam implements Parcelable {
 
+    public static final Creator<UploadParam> CREATOR = new Creator<UploadParam>() {
+        @Override
+        public UploadParam createFromParcel(Parcel in) {
+            return new UploadParam(in);
+        }
+
+        @Override
+        public UploadParam[] newArray(int size) {
+            return new UploadParam[size];
+        }
+    };
     private final int mEngineId;
     private final int mType;
     private final String mFileUri;
@@ -22,6 +33,41 @@ public class UploadParam implements Parcelable {
     private final List<Pair<String, String>> mHeaders;
     private final List<Pair<String, String>> mBodies;
     private final int mResultOpenAction;
+
+    public UploadParam(int engineId, int type, String fileUri, String fileName, String url, String postFileKey, List<Pair<String, String>> headers, List<Pair<String, String>> bodies, int resultOpenAction) {
+        mEngineId = engineId;
+        mType = type;
+        mFileUri = fileUri;
+        mFilename = fileName;
+        mUrl = url;
+        mPostFileKey = postFileKey;
+        mHeaders = headers;
+        mBodies = bodies;
+        mResultOpenAction = resultOpenAction;
+    }
+
+    public UploadParam(Parcel in) {
+        mEngineId = in.readInt();
+        mType = in.readInt();
+        mFileUri = in.readString();
+        mFilename = in.readString();
+        mUrl = in.readString();
+        mPostFileKey = in.readString();
+
+        int N;
+        N = in.readInt();
+        mHeaders = new ArrayList<>(N);
+        for (int i = 0; i < N; i++) {
+            mHeaders.add(new Pair<>(in.readString(), in.readString()));
+        }
+
+        N = in.readInt();
+        mBodies = new ArrayList<>(N);
+        for (int i = 0; i < N; i++) {
+            mBodies.add(new Pair<>(in.readString(), in.readString()));
+        }
+        mResultOpenAction = in.readInt();
+    }
 
     public int getEngineId() {
         return mEngineId;
@@ -59,18 +105,6 @@ public class UploadParam implements Parcelable {
         return mResultOpenAction;
     }
 
-    public UploadParam(int engineId, int type, String fileUri, String fileName, String url, String postFileKey, List<Pair<String, String>> headers, List<Pair<String, String>> bodies, int resultOpenAction) {
-        mEngineId = engineId;
-        mType = type;
-        mFileUri = fileUri;
-        mFilename = fileName;
-        mUrl = url;
-        mPostFileKey = postFileKey;
-        mHeaders = headers;
-        mBodies = bodies;
-        mResultOpenAction = resultOpenAction;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -96,40 +130,4 @@ public class UploadParam implements Parcelable {
         }
         dest.writeInt(mResultOpenAction);
     }
-
-    public UploadParam(Parcel in) {
-        mEngineId = in.readInt();
-        mType = in.readInt();
-        mFileUri = in.readString();
-        mFilename = in.readString();
-        mUrl = in.readString();
-        mPostFileKey = in.readString();
-
-        int N;
-        N = in.readInt();
-        mHeaders = new ArrayList<>(N);
-        for (int i=0; i<N; i++) {
-            mHeaders.add(new Pair<>(in.readString(), in.readString()));
-        }
-
-        N = in.readInt();
-        mBodies = new ArrayList<>(N);
-        for (int i=0; i<N; i++) {
-            mBodies.add(new Pair<>(in.readString(), in.readString()));
-        }
-        mResultOpenAction = in.readInt();
-    }
-
-
-    public static final Creator<UploadParam> CREATOR = new Creator<UploadParam>() {
-        @Override
-        public UploadParam createFromParcel(Parcel in) {
-            return new UploadParam(in);
-        }
-
-        @Override
-        public UploadParam[] newArray(int size) {
-            return new UploadParam[size];
-        }
-    };
 }

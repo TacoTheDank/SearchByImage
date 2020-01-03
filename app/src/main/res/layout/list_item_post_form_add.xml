@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:id="@+id/linearLayout"
-              android:layout_width="match_parent"
-              android:layout_height="48dp"
-              android:paddingLeft="16dp"
-              android:paddingRight="16dp"
-              android:focusable="true"
-              android:clickable="true"
-              android:background="?attr/selectableItemBackground">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
     <ImageView
+        android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView6"
-        app:srcCompat="@drawable/ic_add_24dp"
+        android:layout_gravity="center_vertical"
         android:cropToPadding="false"
-        android:layout_gravity="center_vertical" />
+        app:srcCompat="@drawable/ic_add_24dp" />
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/upload_form_add"
-        android:id="@+id/textView"
         android:layout_gravity="center_vertical"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:textSize="18sp"
-        android:textColor="#aeaeae" />
+        android:text="@string/upload_form_add"
+        android:textColor="#aeaeae"
+        android:textSize="18sp" />
 </LinearLayout>

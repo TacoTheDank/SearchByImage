@@ -20,18 +20,19 @@ import java.util.List;
  * Helper class for Custom Tabs.
  */
 public class CustomTabsHelper {
-    private static final String TAG = "CustomTabsHelper";
     static final String STABLE_PACKAGE = "com.android.chrome";
     static final String BETA_PACKAGE = "com.chrome.beta";
     static final String DEV_PACKAGE = "com.chrome.dev";
     static final String CANARY_PACKAGE = "com.chrome.canary";
     static final String LOCAL_PACKAGE = "com.google.android.apps.chrome";
+    private static final String TAG = "CustomTabsHelper";
     private static final String EXTRA_CUSTOM_TABS_KEEP_ALIVE =
             "android.support.customtabs.extra.KEEP_ALIVE";
 
     private static String sPackageNameToUse;
 
-    private CustomTabsHelper() {}
+    private CustomTabsHelper() {
+    }
 
     public static void addKeepAliveExtra(Context context, Intent intent) {
         Intent keepAliveIntent = new Intent().setClassName(
@@ -43,7 +44,7 @@ public class CustomTabsHelper {
      * Goes through all apps that handle VIEW intents and have a warmup service. Picks
      * the one chosen by the user if there is one, otherwise makes a best effort to return a
      * valid package name.
-     *
+     * <p>
      * This is <strong>not</strong> threadsafe.
      *
      * @param context {@link Context} to use for accessing {@link PackageManager}.
@@ -99,6 +100,7 @@ public class CustomTabsHelper {
 
     /**
      * Used to check whether there is a specialized handler for a given intent.
+     *
      * @param intent The intent to check with.
      * @return Whether there is a specialized handler for the given intent.
      */
@@ -131,15 +133,6 @@ public class CustomTabsHelper {
         return new String[]{"", STABLE_PACKAGE, BETA_PACKAGE, DEV_PACKAGE, LOCAL_PACKAGE};
     }
 
-    public static class KeepAliveService extends Service {
-        private static final Binder sBinder = new Binder();
-
-        @Override
-        public IBinder onBind(Intent intent) {
-            return sBinder;
-        }
-    }
-
     public static boolean getIsChromeInstalled(Context context) {
         return !getInstalledChromePackageName(context).isEmpty();
     }
@@ -161,5 +154,14 @@ public class CustomTabsHelper {
         }
 
         return list;
+    }
+
+    public static class KeepAliveService extends Service {
+        private static final Binder sBinder = new Binder();
+
+        @Override
+        public IBinder onBind(Intent intent) {
+            return sBinder;
+        }
     }
 }

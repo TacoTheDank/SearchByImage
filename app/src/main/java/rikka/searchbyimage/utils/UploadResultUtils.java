@@ -7,7 +7,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -165,9 +164,9 @@ public class UploadResultUtils {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 int count = 1;
-                for (StatusBarNotification sbn: notificationManager.getActiveNotifications()) {
+                for (StatusBarNotification sbn : notificationManager.getActiveNotifications()) {
                     if (sbn.isGroup() && sbn.getId() != 0) {
-                        count ++;
+                        count++;
                     }
                 }
 

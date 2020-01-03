@@ -9,7 +9,7 @@
         <item>Google</item>
         <item>百度</item>
         <item>iqdb</item>
-		<item>TinEye</item>
+        <item>TinEye</item>
         <item>SauceNAO</item>
         <item>ascii2d</item>
     </string-array>
@@ -24,7 +24,7 @@
     <string name="rate_summary">5つ星でこのアプリを評価し、私は幸せになります &gt;﹏&lt;</string>
     <string name="build_version">ビルドバージョン</string>
 
-	<string name="safe_search_summary">不適切な画像をブロックできます</string>
+    <string name="safe_search_summary">不適切な画像をブロックできます</string>
 
     <string name="google_settings">Google設定</string>
     <string name="google_region_redirect">地域のリダイレクト</string>
@@ -65,7 +65,7 @@
     <string name="get_permission">OK</string>
 
     <string name="donate">寄付</string>
-	<string name="donate_summary">Alipay: rikka@xing.moe</string>
+    <string name="donate_summary">Alipay: rikka@xing.moe</string>
 
     <string name="something_wrong">エラー OAO</string>
 

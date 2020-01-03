@@ -2,9 +2,9 @@
 <full-backup-content>
     <include
         domain="sharedpref"
-        path="."/>
+        path="." />
 
     <include
         domain="database"
-        path="search_engines.db"/>
+        path="search_engines.db" />
 </full-backup-content>

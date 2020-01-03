@@ -127,7 +127,8 @@ public class MainActivity extends BaseActivity {
                                                             .setPositiveButton(R.string.send_feedback, new DialogInterface.OnClickListener() {
                                                                 @Override
                                                                 public void onClick(DialogInterface dialog, int which) {
-                                                                    sendFeedback();                                                        }
+                                                                    sendFeedback();
+                                                                }
                                                             })
                                                             .setNegativeButton(android.R.string.cancel, null)
                                                             .show();

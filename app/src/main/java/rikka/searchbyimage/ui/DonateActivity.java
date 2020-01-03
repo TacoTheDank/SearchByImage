@@ -22,22 +22,19 @@ import rikka.searchbyimage.utils.PackageUtils;
 
 public class DonateActivity extends BaseActivity {
 
-    private View mButtonPlay;
-    private View mButtonAlipay;
-
-    private IabHelperWrapper mIabHelperWrapper;
-
     private final static String SKU_DONATE_1 = "donate_1";
     private final static String SKU_DONATE_2 = "donate_2";
     private final static String SKU_DONATE_5 = "donate_5";
     private final static String SKU_DONATE_10 = "donate_10";
-
     private final static String[] SKU_DONATE = {
             SKU_DONATE_1,
             SKU_DONATE_2,
             SKU_DONATE_5,
             SKU_DONATE_10,
     };
+    private View mButtonPlay;
+    private View mButtonAlipay;
+    private IabHelperWrapper mIabHelperWrapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

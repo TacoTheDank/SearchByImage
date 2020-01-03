@@ -3,7 +3,6 @@ package rikka.searchbyimage.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 
 /**
  * Created by Rikka on 2016/3/3.

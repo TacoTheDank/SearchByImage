@@ -3,7 +3,6 @@ package rikka.searchbyimage.widget;
 import android.animation.Animator;
 import android.content.Context;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -60,16 +60,132 @@ import static rikka.searchbyimage.staticdata.EngineId.SITE_SAUCENAO;
 
 public class UploadService extends Service {
 
-    private static final int NOTIFICATION_ID = 0x10;
-
     public static final String INTENT_ACTION_RESULT = BuildConfig.APPLICATION_ID + ".intent.action.upload_result";
     public static final String INTENT_ACTION_CANCEL = BuildConfig.APPLICATION_ID + ".intent.action.upload_cancel";
     public static final String EXTRA_RESULT = "EXTRA_RESULT";
     public static final String EXTRA_KEY = "EXTRA_KEY";
-
+    private static final int NOTIFICATION_ID = 0x10;
     private UploadBinder mUploadBinder = new UploadBinder();
 
     private Map<String, UploadTask> mTasks = new HashMap<>();
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            removeTask();
+        }
+    };
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.d("Service", "onCreate");
+
+        registerReceiver(mBroadcastReceiver, new IntentFilter(INTENT_ACTION_CANCEL));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("Service", "onDestroy");
+
+        unregisterReceiver(mBroadcastReceiver);
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        Log.d("Service", "onBind");
+
+        startForeground(NOTIFICATION_ID, getNotification(mTasks.size()));
+        return mUploadBinder;
+    }
+
+    /*@Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d("Service", "onStartCommand");
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Log.d("Service", "onUnbind");
+        return super.onUnbind(intent);
+    }
+
+    @Override
+    public void onRebind(Intent intent) {
+        super.onRebind(intent);
+        Log.d("Service", "onRebind");
+    }*/
+
+    private void removeTask() {
+        for (String key : mTasks.keySet()) {
+            UploadTask task = mTasks.get(key);
+            if (task != null) {
+                if (!task.isCancelled()) {
+                    task.cancel(true);
+                }
+                task.mCanceled = true;
+                mTasks.remove(key);
+
+                task.onTaskFinished(true, task.mKey, new UploadResult(UploadResult.CANCELED, "canceled", null));
+            }
+        }
+
+        checkStopAndUpdateNotification();
+    }
+
+    private void removeTask(String key) {
+        UploadTask task = mTasks.get(key);
+        if (task != null) {
+            if (!task.isCancelled()) {
+                task.cancel(true);
+            }
+            task.mCanceled = true;
+            mTasks.remove(key);
+        }
+
+        checkStopAndUpdateNotification();
+    }
+
+    private void startTask(UploadParam param, String key) {
+        UploadTask task = new UploadTask(getApplicationContext(), key);
+        task.execute(param);
+        mTasks.put(key, task);
+
+        checkStopAndUpdateNotification();
+    }
+
+    private void checkStopAndUpdateNotification() {
+        Log.d("UploadService", "checkStopAndUpdateNotification task count " + mTasks.size());
+
+        if (!isServiceUploading()) {
+            stopForeground(true);
+            return;
+        }
+
+        updateNotification();
+    }
+
+    private Notification getNotification(int taskCount) {
+        return new NotificationCompat.Builder(this)
+                .setContentTitle(taskCount == 0 ?
+                        getString(R.string.uploading) : getResources().getQuantityString(R.plurals.uploading_notification, taskCount, taskCount))
+                .setPriority(NotificationCompat.PRIORITY_MIN)
+                .setSmallIcon(R.drawable.ic_stat)
+                .setProgress(100, 0, true)
+                .setColor(0xFF3F51B5)
+                .addAction(R.drawable.ic_stat_cancel, getString(android.R.string.cancel),
+                        PendingIntent.getBroadcast(this, 0, new Intent(INTENT_ACTION_CANCEL), PendingIntent.FLAG_ONE_SHOT))
+                .build();
+    }
+
+    private void updateNotification() {
+        startForeground(NOTIFICATION_ID, getNotification(mTasks.size()));
+    }
+
+    private boolean isServiceUploading() {
+        return !mTasks.isEmpty();
+    }
 
     private class UploadTask extends AsyncTask<UploadParam, Integer, UploadResult> {
 
@@ -154,7 +270,7 @@ public class UploadService extends Service {
                     .addFormDataPart(param.getPostFileKey(), HttpUtils.guessMimeType(param.getFilename()),
                             RequestBody.create(MediaType.parse(HttpUtils.guessMimeType(param.getFilename())), content));
 
-            for (Pair<String, String> pair: param.getBodies()) {
+            for (Pair<String, String> pair : param.getBodies()) {
                 bodyBuilder.addFormDataPart(pair.first, pair.second);
             }
 
@@ -256,125 +372,6 @@ public class UploadService extends Service {
                 sendBroadcast(intent);
             }
         }
-    }
-
-    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            removeTask();
-        }
-    };
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.d("Service", "onCreate");
-
-        registerReceiver(mBroadcastReceiver, new IntentFilter(INTENT_ACTION_CANCEL));
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("Service", "onDestroy");
-
-        unregisterReceiver(mBroadcastReceiver);
-    }
-
-    /*@Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("Service", "onStartCommand");
-        return super.onStartCommand(intent, flags, startId);
-    }
-
-    @Override
-    public boolean onUnbind(Intent intent) {
-        Log.d("Service", "onUnbind");
-        return super.onUnbind(intent);
-    }
-
-    @Override
-    public void onRebind(Intent intent) {
-        super.onRebind(intent);
-        Log.d("Service", "onRebind");
-    }*/
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        Log.d("Service", "onBind");
-
-        startForeground(NOTIFICATION_ID, getNotification(mTasks.size()));
-        return mUploadBinder;
-    }
-
-    private void removeTask() {
-        for (String key : mTasks.keySet()) {
-            UploadTask task = mTasks.get(key);
-            if (task != null) {
-                if (!task.isCancelled()) {
-                    task.cancel(true);
-                }
-                task.mCanceled = true;
-                mTasks.remove(key);
-
-                task.onTaskFinished(true, task.mKey, new UploadResult(UploadResult.CANCELED, "canceled", null));
-            }
-        }
-
-        checkStopAndUpdateNotification();
-    }
-
-    private void removeTask(String key) {
-        UploadTask task = mTasks.get(key);
-        if (task != null) {
-            if (!task.isCancelled()) {
-                task.cancel(true);
-            }
-            task.mCanceled = true;
-            mTasks.remove(key);
-        }
-
-        checkStopAndUpdateNotification();
-    }
-
-    private void startTask(UploadParam param, String key) {
-        UploadTask task = new UploadTask(getApplicationContext(), key);
-        task.execute(param);
-        mTasks.put(key, task);
-
-        checkStopAndUpdateNotification();
-    }
-
-    private void checkStopAndUpdateNotification() {
-        Log.d("UploadService", "checkStopAndUpdateNotification task count " + mTasks.size());
-
-        if (!isServiceUploading()) {
-            stopForeground(true);
-            return;
-        }
-
-        updateNotification();
-    }
-
-    private Notification getNotification(int taskCount) {
-        return new NotificationCompat.Builder(this)
-                .setContentTitle(taskCount == 0 ?
-                        getString(R.string.uploading) : getResources().getQuantityString(R.plurals.uploading_notification, taskCount, taskCount))
-                .setPriority(NotificationCompat.PRIORITY_MIN)
-                .setSmallIcon(R.drawable.ic_stat)
-                .setProgress(100, 0, true)
-                .setColor(0xFF3F51B5)
-                .addAction(R.drawable.ic_stat_cancel, getString(android.R.string.cancel),
-                        PendingIntent.getBroadcast(this, 0, new Intent(INTENT_ACTION_CANCEL), PendingIntent.FLAG_ONE_SHOT))
-                .build();
-    }
-
-    private void updateNotification() {
-        startForeground(NOTIFICATION_ID, getNotification(mTasks.size()));
-    }
-
-    private boolean isServiceUploading() {
-        return !mTasks.isEmpty();
     }
 
     public class UploadBinder extends Binder {

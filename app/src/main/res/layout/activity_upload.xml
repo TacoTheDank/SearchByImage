@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,16 +28,16 @@
                     android:id="@android:id/icon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:layout_height="270dp"/>
+                    tools:layout_height="270dp" />
 
                 <LinearLayout
                     android:id="@android:id/progress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:padding="16dp"
-                    android:layout_gravity="center">
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <FrameLayout
                         android:layout_width="24dp"
@@ -47,13 +46,13 @@
                         <ProgressBar
                             android:id="@android:id/icon1"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent" />
 
                         <ImageView
                             android:id="@android:id/icon2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            app:srcCompat="@drawable/ic_error_24dp"/>
+                            app:srcCompat="@drawable/ic_error_24dp" />
 
                     </FrameLayout>
 
@@ -61,11 +60,11 @@
                         android:id="@android:id/text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        tools:text="获取图片中..."/>
+                        android:textSize="16sp"
+                        tools:text="获取图片中..." />
 
                 </LinearLayout>
 
@@ -73,11 +72,11 @@
                     android:id="@android:id/closeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    app:srcCompat="@drawable/ic_crop_24dp"
+                    android:layout_gravity="end|top"
                     android:layout_margin="8dp"
-                    android:layout_gravity="end|top"/>
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    app:srcCompat="@drawable/ic_crop_24dp" />
 
             </FrameLayout>
 
@@ -85,48 +84,48 @@
                 android:id="@android:id/button3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:minHeight="56dp"
-                android:gravity="center_vertical"
-                tools:text="搜索引擎"
-                android:textSize="16sp"
                 android:layout_marginTop="8dp"
+                android:background="?attr/selectableItemBackground"
+                android:drawablePadding="16dp"
+                android:gravity="center_vertical"
+                android:minHeight="56dp"
                 android:paddingLeft="@dimen/item_padding"
                 android:paddingRight="@dimen/item_padding"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:drawablePadding="16dp"
-                tools:drawableStart="@drawable/ic_cloud_24dp"/>
+                android:textSize="16sp"
+                tools:drawableStart="@drawable/ic_cloud_24dp"
+                tools:text="搜索引擎" />
 
             <TextView
                 android:id="@android:id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
-                android:minHeight="56dp"
+                android:drawablePadding="16dp"
                 android:gravity="center_vertical"
-                tools:text="搜索引擎"
-                android:textSize="16sp"
+                android:minHeight="56dp"
                 android:paddingLeft="@dimen/item_padding"
                 android:paddingRight="@dimen/item_padding"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:drawablePadding="16dp"
-                tools:drawableStart="@drawable/ic_cloud_24dp"/>
+                android:textSize="16sp"
+                tools:drawableStart="@drawable/ic_cloud_24dp"
+                tools:text="搜索引擎" />
 
             <TextView
                 android:id="@android:id/button1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:background="?attr/selectableItemBackground"
-                android:minHeight="56dp"
+                android:drawablePadding="16dp"
                 android:gravity="center_vertical"
-                tools:text="开始上传"
-                android:textSize="16sp"
+                android:minHeight="56dp"
                 android:paddingLeft="@dimen/item_padding"
                 android:paddingRight="@dimen/item_padding"
-                android:layout_marginBottom="8dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:drawablePadding="16dp"
-                tools:drawableStart="@drawable/ic_file_upload_24dp"/>
+                android:textSize="16sp"
+                tools:drawableStart="@drawable/ic_file_upload_24dp"
+                tools:text="开始上传" />
 
         </LinearLayout>
 

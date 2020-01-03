@@ -7,12 +7,12 @@
             android:duration="300"
             android:propertyName="alpha"
             android:startOffset="200"
-            android:valueTo="0"/>
+            android:valueTo="0" />
     </item>
     <item>
         <objectAnimator
             android:duration="@android:integer/config_shortAnimTime"
             android:propertyName="alpha"
-            android:valueTo="1"/>
+            android:valueTo="1" />
     </item>
 </selector>

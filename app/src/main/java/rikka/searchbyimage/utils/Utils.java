@@ -2,7 +2,6 @@ package rikka.searchbyimage.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.DisplayMetrics;
 
 import java.io.File;
 import java.io.FileOutputStream;

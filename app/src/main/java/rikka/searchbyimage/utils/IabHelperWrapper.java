@@ -22,29 +22,36 @@ import rikka.searchbyimage.BuildConfig;
 
 public class IabHelperWrapper implements IabBroadcastReceiver.IabBroadcastListener {
 
-    public interface OnQueryInventoryFinishedListener {
-        void onFinished(IabHelperWrapper iabHelperWrapper, IabResult result, Inventory inventory);
-    }
-
-    private OnQueryInventoryFinishedListener mOnQueryInventoryFinishedListener;
-
-    public interface OnPurchaseSuccessListener {
-        void onSuccess(IabHelperWrapper iabHelperWrapper, Purchase purchase);
-    }
-
     private static final String TAG = "IabHelperWrapper";
-
     private static final int RC_REQUEST = 10001;
-
+    private OnQueryInventoryFinishedListener mOnQueryInventoryFinishedListener;
     private Context mContext;
-
     // The helper object
     private IabHelper mHelper;
-
     // Provides purchase notification while this app is running
     private IabBroadcastReceiver mBroadcastReceiver;
-
     private boolean isSuccess;
+    // Called when consumption is complete
+    private IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
+        public void onConsumeFinished(Purchase purchase, IabResult result) {
+            Log.d(TAG, "Consumption finished. Purchase: " + purchase + ", result: " + result);
+
+            // if we were disposed of in the meantime, quit.
+            if (mHelper == null) return;
+
+            // We know this is the "gas" sku because it's the only one we consume,
+            // so we don't check which sku was consumed. If you have more than one
+            // sku, you probably should check...
+            if (result.isSuccess()) {
+                // successfully consumed, so we apply the effects of the item in our
+                // game world's logic, which in our case means filling the gas tank a bit
+                Log.d(TAG, "Consumption successful. Provisioning.");
+            } else {
+                complain("Error while consuming: " + result);
+            }
+            Log.d(TAG, "End consumption flow.");
+        }
+    };
 
     public IabHelperWrapper(Context context, String base64EncodedPublicKey, final OnQueryInventoryFinishedListener onQueryInventoryFinishedListener) {
         mContext = context;
@@ -99,68 +106,6 @@ public class IabHelperWrapper implements IabBroadcastReceiver.IabBroadcastListen
         });
     }
 
-    // Listener that's called when we finish querying the items and subscriptions we own
-    private class QueryInventoryFinishedCallback implements IabHelper.QueryInventoryFinishedListener {
-
-        private OnQueryInventoryFinishedListener mOnQueryInventoryFinishedListener;
-
-        public QueryInventoryFinishedCallback(OnQueryInventoryFinishedListener onQueryInventoryFinishedListener) {
-            mOnQueryInventoryFinishedListener = onQueryInventoryFinishedListener;
-        }
-
-        @Override
-        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            Log.d(TAG, "Query inventory finished.");
-
-            // Have we been disposed of in the meantime? If so, quit.
-            if (mHelper == null) return;
-
-            // Is it a failure?
-            if (result.isFailure()) {
-                complain("Failed to query inventory: " + result);
-                return;
-            }
-
-            if (mOnQueryInventoryFinishedListener != null) {
-                mOnQueryInventoryFinishedListener.onFinished(IabHelperWrapper.this, result, inventory);
-            }
-
-            Log.d(TAG, "Query inventory was successful.");
-        }
-    }
-
-    private class PurchaseFinishedCallback implements IabHelper.OnIabPurchaseFinishedListener {
-
-        private OnPurchaseSuccessListener mOnPurchaseSuccessListener;
-
-        PurchaseFinishedCallback(OnPurchaseSuccessListener onPurchaseSuccessListener) {
-            mOnPurchaseSuccessListener = onPurchaseSuccessListener;
-        }
-
-        @Override
-        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-            Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
-
-            // if we were disposed of in the meantime, quit.
-            if (mHelper == null) return;
-
-            if (result.isFailure()) {
-                complain("Error purchasing: " + result);
-                return;
-            }
-            if (!verifyDeveloperPayload(purchase)) {
-                complain("Error purchasing. Authenticity verification failed.");
-                return;
-            }
-
-            Log.d(TAG, "Purchase successful.");
-
-            if (mOnPurchaseSuccessListener != null) {
-                mOnPurchaseSuccessListener.onSuccess(IabHelperWrapper.this, purchase);
-            }
-        }
-    }
-
     public void consume(Purchase purchase) {
         if (purchase != null && verifyDeveloperPayload(purchase)) {
             Log.d(TAG, "Consuming " + purchase.getSignature());
@@ -171,29 +116,6 @@ public class IabHelperWrapper implements IabBroadcastReceiver.IabBroadcastListen
             }
         }
     }
-
-    // Called when consumption is complete
-    private IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
-        public void onConsumeFinished(Purchase purchase, IabResult result) {
-            Log.d(TAG, "Consumption finished. Purchase: " + purchase + ", result: " + result);
-
-            // if we were disposed of in the meantime, quit.
-            if (mHelper == null) return;
-
-            // We know this is the "gas" sku because it's the only one we consume,
-            // so we don't check which sku was consumed. If you have more than one
-            // sku, you probably should check...
-            if (result.isSuccess()) {
-                // successfully consumed, so we apply the effects of the item in our
-                // game world's logic, which in our case means filling the gas tank a bit
-                Log.d(TAG, "Consumption successful. Provisioning.");
-            } else {
-                complain("Error while consuming: " + result);
-            }
-            Log.d(TAG, "End consumption flow.");
-        }
-    };
-
 
     private boolean verifyDeveloperPayload(Purchase purchase) {
         return true;
@@ -279,5 +201,75 @@ public class IabHelperWrapper implements IabBroadcastReceiver.IabBroadcastListen
 
     public boolean isSuccess() {
         return isSuccess;
+    }
+
+    public interface OnQueryInventoryFinishedListener {
+        void onFinished(IabHelperWrapper iabHelperWrapper, IabResult result, Inventory inventory);
+    }
+
+    public interface OnPurchaseSuccessListener {
+        void onSuccess(IabHelperWrapper iabHelperWrapper, Purchase purchase);
+    }
+
+    // Listener that's called when we finish querying the items and subscriptions we own
+    private class QueryInventoryFinishedCallback implements IabHelper.QueryInventoryFinishedListener {
+
+        private OnQueryInventoryFinishedListener mOnQueryInventoryFinishedListener;
+
+        public QueryInventoryFinishedCallback(OnQueryInventoryFinishedListener onQueryInventoryFinishedListener) {
+            mOnQueryInventoryFinishedListener = onQueryInventoryFinishedListener;
+        }
+
+        @Override
+        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+            Log.d(TAG, "Query inventory finished.");
+
+            // Have we been disposed of in the meantime? If so, quit.
+            if (mHelper == null) return;
+
+            // Is it a failure?
+            if (result.isFailure()) {
+                complain("Failed to query inventory: " + result);
+                return;
+            }
+
+            if (mOnQueryInventoryFinishedListener != null) {
+                mOnQueryInventoryFinishedListener.onFinished(IabHelperWrapper.this, result, inventory);
+            }
+
+            Log.d(TAG, "Query inventory was successful.");
+        }
+    }
+
+    private class PurchaseFinishedCallback implements IabHelper.OnIabPurchaseFinishedListener {
+
+        private OnPurchaseSuccessListener mOnPurchaseSuccessListener;
+
+        PurchaseFinishedCallback(OnPurchaseSuccessListener onPurchaseSuccessListener) {
+            mOnPurchaseSuccessListener = onPurchaseSuccessListener;
+        }
+
+        @Override
+        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+            Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
+
+            // if we were disposed of in the meantime, quit.
+            if (mHelper == null) return;
+
+            if (result.isFailure()) {
+                complain("Error purchasing: " + result);
+                return;
+            }
+            if (!verifyDeveloperPayload(purchase)) {
+                complain("Error purchasing. Authenticity verification failed.");
+                return;
+            }
+
+            Log.d(TAG, "Purchase successful.");
+
+            if (mOnPurchaseSuccessListener != null) {
+                mOnPurchaseSuccessListener.onSuccess(IabHelperWrapper.this, purchase);
+            }
+        }
     }
 }

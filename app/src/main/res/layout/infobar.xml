@@ -1,75 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rikka.searchbyimage.view.InfoBarLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<rikka.searchbyimage.view.InfoBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/infobar_width"
     android:layout_height="160dp"
     android:layout_gravity="bottom|center_horizontal"
-    android:clickable="true"
     android:background="@color/background"
+    android:clickable="true"
     android:elevation="12dp">
 
     <ImageButton
         android:id="@+id/infobar_close"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:src="@drawable/infobar_close"
-        android:background="?attr/selectableItemBackground"
         android:layout_gravity="end|top|right"
-        android:scaleType="centerCrop" />
+        android:background="?attr/selectableItemBackground"
+        android:scaleType="centerCrop"
+        android:src="@drawable/infobar_close" />
 
     <ImageView
+        android:id="@+id/item_icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:id="@+id/item_icon"
         android:layout_gravity="start|top|left"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/infobar_download"
         android:cropToPadding="true"
         android:padding="16dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/infobar_download" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom|right"
-        android:layout_marginRight="16dp"
-        android:layout_marginEnd="16dp">
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="create new file"
             android:id="@+id/infobar_negative"
-            android:theme="@style/InfoBarButton"
-            android:layout_marginBottom="8dp"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored" />
-
-        <Button
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="replace file"
-            android:id="@+id/infobar_positive"
-            android:theme="@style/InfoBarButton"
             android:layout_marginBottom="8dp"
-            style="@style/Widget.AppCompat.Button.Colored" />
+            android:theme="@style/InfoBarButton"
+            tools:text="create new file" />
+
+        <Button
+            android:id="@+id/infobar_positive"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:theme="@style/InfoBarButton"
+            tools:text="replace file" />
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/infobar_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="80dp"
-        tools:text="Do you want to replace the existing file poi.png?\n\n\n\n\n\\n\n\n\n\n\n\n\n\n\n\n\n"
-        android:id="@+id/infobar_text"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="68dp"
         android:layout_marginStart="68dp"
-        android:layout_marginRight="56dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="56dp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat" />
+        android:layout_marginRight="56dp"
+        android:maxHeight="80dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat"
+        android:textSize="16sp"
+        tools:text="Do you want to replace the existing file poi.png?\n\n\n\n\n\\n\n\n\n\n\n\n\n\n\n\n\n" />
 
 </rikka.searchbyimage.view.InfoBarLayout>

@@ -17,15 +17,19 @@ import static rikka.searchbyimage.support.GetDeviceInfo.getAppInfo;
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
     public static String CRASH_DIR;
     public static String CRASH_LOG;
-
+    public static String VERSION = "Unknown";
     private static String ANDROID = Build.VERSION.RELEASE;
     private static String MODEL = Build.MODEL;
     private static String MANUFACTURER = Build.MANUFACTURER;
-
-    public static String VERSION = "Unknown";
-
-    private Thread.UncaughtExceptionHandler mPrevious;
     private static Context mContext;
+    private Thread.UncaughtExceptionHandler mPrevious;
+
+    private CrashHandler() {
+        //mPrevious = Thread.currentThread().getUncaughtExceptionHandler();
+        mPrevious = Thread.getDefaultUncaughtExceptionHandler();
+        //Thread.currentThread().setUncaughtExceptionHandler(this);
+        Thread.setDefaultUncaughtExceptionHandler(this);
+    }
 
     public static void init(Context context) {
         mContext = context;
@@ -43,13 +47,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     public static void register() {
         new CrashHandler();
-    }
-
-    private CrashHandler() {
-        //mPrevious = Thread.currentThread().getUncaughtExceptionHandler();
-        mPrevious = Thread.getDefaultUncaughtExceptionHandler();
-        //Thread.currentThread().setUncaughtExceptionHandler(this);
-        Thread.setDefaultUncaughtExceptionHandler(this);
     }
 
     @Override

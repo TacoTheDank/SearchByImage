@@ -1,8 +1,8 @@
 package rikka.searchbyimage.utils;
 
 import android.content.ClipData;
-import android.content.Context;
 import android.content.ClipboardManager;
+import android.content.Context;
 
 /**
  * Created by Rikka on 2015/12/18.

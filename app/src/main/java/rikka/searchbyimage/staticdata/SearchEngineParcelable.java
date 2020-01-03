@@ -9,24 +9,6 @@ import java.util.ArrayList;
  * Created by Rikka on 2016/1/24.
  */
 public class SearchEngineParcelable implements Parcelable {
-    public SearchEngine data = new SearchEngine();
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(data.getName());
-        dest.writeString(data.getUploadUrl());
-        dest.writeString(data.getPostFileKey());
-        dest.writeInt(data.getResultOpenAction());
-        dest.writeList(data.post_text_key);
-        dest.writeList(data.post_text_value);
-        dest.writeList(data.post_text_type);
-    }
-
     public static final Parcelable.Creator<SearchEngineParcelable> CREATOR = new Parcelable.Creator<SearchEngineParcelable>() {
         @Override
         public SearchEngineParcelable createFromParcel(Parcel source) {
@@ -49,4 +31,21 @@ public class SearchEngineParcelable implements Parcelable {
             return new SearchEngineParcelable[size];
         }
     };
+    public SearchEngine data = new SearchEngine();
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(data.getName());
+        dest.writeString(data.getUploadUrl());
+        dest.writeString(data.getPostFileKey());
+        dest.writeInt(data.getResultOpenAction());
+        dest.writeList(data.post_text_key);
+        dest.writeList(data.post_text_value);
+        dest.writeList(data.post_text_type);
+    }
 }

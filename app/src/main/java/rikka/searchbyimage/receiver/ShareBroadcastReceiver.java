@@ -23,7 +23,7 @@ public class ShareBroadcastReceiver extends BroadcastReceiver {
 
             Intent chooserIntent = Intent.createChooser(shareIntent, context.getString(R.string.share_url));
             chooserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            IntentUtils.startOtherActivity(context,intent);
+            IntentUtils.startOtherActivity(context, intent);
         }
     }
 }

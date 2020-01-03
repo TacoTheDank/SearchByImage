@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <cache-path name="images" path="images/"/>
-    <external-cache-path name="images" path="images/"/>
-    <external-path name="downloaded" path="Pictures/SearchByImage/"/>
+    <cache-path
+        name="images"
+        path="images/" />
+    <external-cache-path
+        name="images"
+        path="images/" />
+    <external-path
+        name="downloaded"
+        path="Pictures/SearchByImage/" />
 </paths>

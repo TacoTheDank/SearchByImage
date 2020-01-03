@@ -79,51 +79,41 @@ public class UploadActivity extends BaseActivity {
 
     public static final String EXTRA_URI =
             "rikka.searchbyimage.ui.UploadActivity.EXTRA_URI";
-
-    private final class UploadServiceConnection implements ServiceConnection {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.d("Service", "onServiceConnected");
-            sUploadBinder = (UploadService.UploadBinder) service;
-
-            if (mUploadParam != null) {
-                sUploadBinder.addTask(mUploadParam, mFileToUpload.getName());
-            }
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            Log.d("Service", "onServiceDisconnected");
-
-            sUploadBinder = null;
-        }
-    }
-
-    private UploadServiceConnection mServiceConnection = new UploadServiceConnection();
     private static UploadService.UploadBinder sUploadBinder;
-
+    private UploadServiceConnection mServiceConnection = new UploadServiceConnection();
     private Uri mUri;
-
     private BottomSheetBehavior mBottomSheetBehavior;
-
     private ImageView mImageView;
     private View mProgressContainer;
     private View mProgress;
     private ImageView mProgressIcon;
     private TextView mProgressText;
-
     private TextView mButton1;
     private TextView mButton2;
     private TextView mButton3;
     private View mCropButton;
-
     private boolean mOpenSettings;
-
     private File mFileToUpload;
     private String mFilename;
     private UploadParam mUploadParam;
-
     private boolean mPaused;
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(getClass().getSimpleName(), "onReceive");
+
+            if (mFileToUpload == null
+                    || !intent.getStringExtra(UploadService.EXTRA_KEY).equals(mFileToUpload.getName())) {
+                return;
+            }
+
+            UploadResultUtils.handleResult(context, intent, mPaused);
+
+            if (!isFinishing()) {
+                finish();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -629,24 +619,6 @@ public class UploadActivity extends BaseActivity {
                 item.getResultOpenAction());
     }
 
-    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(getClass().getSimpleName(), "onReceive");
-
-            if (mFileToUpload == null
-                    || !intent.getStringExtra(UploadService.EXTRA_KEY).equals(mFileToUpload.getName())) {
-                return;
-            }
-
-            UploadResultUtils.handleResult(context, intent, mPaused);
-
-            if (!isFinishing()) {
-                finish();
-            }
-        }
-    };
-
     private void startService() {
         setButtons(true);
 
@@ -688,5 +660,24 @@ public class UploadActivity extends BaseActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mBroadcastReceiver);
 
         Log.d("UploadActivity", "unregisterReceiver");
+    }
+
+    private final class UploadServiceConnection implements ServiceConnection {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.d("Service", "onServiceConnected");
+            sUploadBinder = (UploadService.UploadBinder) service;
+
+            if (mUploadParam != null) {
+                sUploadBinder.addTask(mUploadParam, mFileToUpload.getName());
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.d("Service", "onServiceDisconnected");
+
+            sUploadBinder = null;
+        }
     }
 }

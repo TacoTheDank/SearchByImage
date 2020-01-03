@@ -22,100 +22,65 @@ import rikka.searchbyimage.utils.ParcelableUtils;
  * Created by Rikka on 2016/1/25.
  */
 public class SearchEngine implements Observable {
+    public static final int DEFAULT_ENGINE_ICON = R.drawable.ic_icon_other_24dp;
+    public static final int BUILD_IN_ENGINE_ICONS[] = {
+            R.drawable.ic_icon_google_24dp,
+            DEFAULT_ENGINE_ICON,
+            DEFAULT_ENGINE_ICON,
+            DEFAULT_ENGINE_ICON,
+            DEFAULT_ENGINE_ICON,
+            DEFAULT_ENGINE_ICON
+    };
+    public final static int SITE_GOOGLE = 0;
+    public final static int SITE_BAIDU = 1;
+    public final static int SITE_IQDB = 2;
+    public final static int SITE_TINEYE = 3;
+    public final static int SITE_SAUCENAO = 4;
+    public final static int SITE_ASCII2D = 5;
+    public final static int SITE_CUSTOM_START = 6;
+    private static final String BUILD_IN_ENGINE_URL[] = {
+            "https://www.google.com/searchbyimage/upload",
+            "http://image.baidu.com/pictureup/uploadwise",
+            "https://iqdb.org/",
+            "https://www.tineye.com/search",
+            "https://saucenao.com/search.php",
+            "https://www.ascii2d.net/search/file"
+    };
+    private static final String BUILD_IN_ENGINE_NAME[] = {
+            "Google",
+            "Baidu",
+            "iqdb",
+            "TinEye",
+            "SauceNAO",
+            "ascii2d"
+    };
+    private static final String BUILD_IN_ENGINE_FILE_KEY[] = {
+            "encoded_image",
+            "upload",
+            "file",
+            "image",
+            "file",
+            "file"
+    };
+    private static final int BUILD_IN_ENGINE_OPEN_ACTION[] = {
+            RESULT_OPEN_ACTION.DEFAULT,
+            RESULT_OPEN_ACTION.DEFAULT,
+            RESULT_OPEN_ACTION.BUILD_IN_IQDB,
+            RESULT_OPEN_ACTION.DEFAULT,
+            RESULT_OPEN_ACTION.OPEN_HTML_FILE,
+            RESULT_OPEN_ACTION.DEFAULT
+    };
+    private static List<SearchEngine> sList;
+    public List<String> post_text_key = new ArrayList<>();
+    public List<String> post_text_value = new ArrayList<>();
+    public List<Integer> post_text_type = new ArrayList<>();
     private int id;
     private int enabled;
     private String name;
     private String upload_url;
     private String post_file_key;
     private int result_open_action = RESULT_OPEN_ACTION.DEFAULT;
-    public List<String> post_text_key = new ArrayList<>();
-    public List<String> post_text_value = new ArrayList<>();
-    public List<Integer> post_text_type = new ArrayList<>();
-
-    @Bindable
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Bindable
-    public int getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(int enabled) {
-        this.enabled = enabled;
-    }
-
-    @Bindable
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Bindable
-    public String getUploadUrl() {
-        return upload_url;
-    }
-
-    public void setUploadUrl(String upload_url) {
-        this.upload_url = upload_url;
-    }
-
-    @Bindable
-    public String getPostFileKey() {
-        return post_file_key;
-    }
-
-    public void setPostFileKey(String post_file_key) {
-        this.post_file_key = post_file_key;
-    }
-
-    @Bindable
-    public int getResultOpenAction() {
-        return result_open_action;
-    }
-
-    public void setResultOpenAction(int result_open_action) {
-        this.result_open_action = result_open_action;
-    }
-
-    @Bindable
-    public String getEngineIcon() {
-        return getEngineHost() + "/favicon.ico";
-    }
-
-    @Bindable
-    public String getEngineHost() {
-        Uri uri = Uri.parse(upload_url);
-        return new Uri.Builder().scheme(uri.getScheme()).authority(uri.getHost()).build().toString();
-    }
-
     private PropertyChangeRegistry pcr = new PropertyChangeRegistry();
-
-    @Override
-    public void addOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
-        pcr.add(callback);
-    }
-
-    @Override
-    public void removeOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
-        pcr.remove(callback);
-    }
-
-    public static class RESULT_OPEN_ACTION {
-        public static final int DEFAULT = 0;
-        public static final int OPEN_HTML_FILE = 1;
-        public static final int BUILD_IN_IQDB = 2;
-    }
-
-    private static List<SearchEngine> sList;
 
     public static synchronized List<SearchEngine> getList(Context context) {
         if (sList == null) {
@@ -181,61 +146,6 @@ public class SearchEngine implements Observable {
         }
         return null;
     }
-
-    private static final String BUILD_IN_ENGINE_URL[] = {
-            "https://www.google.com/searchbyimage/upload",
-            "http://image.baidu.com/pictureup/uploadwise",
-            "https://iqdb.org/",
-            "https://www.tineye.com/search",
-            "https://saucenao.com/search.php",
-            "https://www.ascii2d.net/search/file"
-    };
-
-    private static final String BUILD_IN_ENGINE_NAME[] = {
-            "Google",
-            "Baidu",
-            "iqdb",
-            "TinEye",
-            "SauceNAO",
-            "ascii2d"
-    };
-
-    private static final String BUILD_IN_ENGINE_FILE_KEY[] = {
-            "encoded_image",
-            "upload",
-            "file",
-            "image",
-            "file",
-            "file"
-    };
-
-    private static final int BUILD_IN_ENGINE_OPEN_ACTION[] = {
-            RESULT_OPEN_ACTION.DEFAULT,
-            RESULT_OPEN_ACTION.DEFAULT,
-            RESULT_OPEN_ACTION.BUILD_IN_IQDB,
-            RESULT_OPEN_ACTION.DEFAULT,
-            RESULT_OPEN_ACTION.OPEN_HTML_FILE,
-            RESULT_OPEN_ACTION.DEFAULT
-    };
-
-    public static final int DEFAULT_ENGINE_ICON = R.drawable.ic_icon_other_24dp;
-
-    public static final int BUILD_IN_ENGINE_ICONS[] = {
-            R.drawable.ic_icon_google_24dp,
-            DEFAULT_ENGINE_ICON,
-            DEFAULT_ENGINE_ICON,
-            DEFAULT_ENGINE_ICON,
-            DEFAULT_ENGINE_ICON,
-            DEFAULT_ENGINE_ICON
-    };
-
-    public final static int SITE_GOOGLE = 0;
-    public final static int SITE_BAIDU = 1;
-    public final static int SITE_IQDB = 2;
-    public final static int SITE_TINEYE = 3;
-    public final static int SITE_SAUCENAO = 4;
-    public final static int SITE_ASCII2D = 5;
-    public final static int SITE_CUSTOM_START = 6;
 
     /**
      * add built-in engines to database
@@ -335,5 +245,86 @@ public class SearchEngine implements Observable {
         boolean ans = cursor.getCount() == 1;
         cursor.close();
         return ans;
+    }
+
+    @Bindable
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Bindable
+    public int getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
+
+    @Bindable
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Bindable
+    public String getUploadUrl() {
+        return upload_url;
+    }
+
+    public void setUploadUrl(String upload_url) {
+        this.upload_url = upload_url;
+    }
+
+    @Bindable
+    public String getPostFileKey() {
+        return post_file_key;
+    }
+
+    public void setPostFileKey(String post_file_key) {
+        this.post_file_key = post_file_key;
+    }
+
+    @Bindable
+    public int getResultOpenAction() {
+        return result_open_action;
+    }
+
+    public void setResultOpenAction(int result_open_action) {
+        this.result_open_action = result_open_action;
+    }
+
+    @Bindable
+    public String getEngineIcon() {
+        return getEngineHost() + "/favicon.ico";
+    }
+
+    @Bindable
+    public String getEngineHost() {
+        Uri uri = Uri.parse(upload_url);
+        return new Uri.Builder().scheme(uri.getScheme()).authority(uri.getHost()).build().toString();
+    }
+
+    @Override
+    public void addOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
+        pcr.add(callback);
+    }
+
+    @Override
+    public void removeOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
+        pcr.remove(callback);
+    }
+
+    public static class RESULT_OPEN_ACTION {
+        public static final int DEFAULT = 0;
+        public static final int OPEN_HTML_FILE = 1;
+        public static final int BUILD_IN_IQDB = 2;
     }
 }

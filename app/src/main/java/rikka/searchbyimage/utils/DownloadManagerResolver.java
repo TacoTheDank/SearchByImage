@@ -62,7 +62,7 @@ public final class DownloadManagerResolver {
                         enableDownloadManager(context);
                     }
                 })
-                .setNegativeButton(android.R.string.cancel,null)
+                .setNegativeButton(android.R.string.cancel, null)
                 .setCancelable(false)
                 .create();
     }
@@ -75,13 +75,13 @@ public final class DownloadManagerResolver {
             //Open the specific App Info page:
             Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             intent.setData(Uri.parse("package:" + DOWNLOAD_MANAGER_PACKAGE_NAME));
-            IntentUtils.startOtherActivity(context,intent);
+            IntentUtils.startOtherActivity(context, intent);
         } catch (ActivityNotFoundException e) {
             e.printStackTrace();
 
             //Open the generic Apps page:
             Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
-            IntentUtils.startOtherActivity(context,intent);
+            IntentUtils.startOtherActivity(context, intent);
         }
     }
 }

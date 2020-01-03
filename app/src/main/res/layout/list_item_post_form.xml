@@ -8,23 +8,23 @@
     android:paddingRight="16dp">
 
     <EditText
+        android:id="@+id/editText_key"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/editText_key"
-        android:hint="@string/upload_form_key"
-        android:inputType="textNoSuggestions"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:layout_gravity="center_vertical"/>
+        android:hint="@string/upload_form_key"
+        android:inputType="textNoSuggestions" />
 
     <EditText
+        android:id="@+id/editText_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/editText_value"
-        android:hint="@string/upload_form_value"
-        android:inputType="textNoSuggestions"
-        android:layout_marginRight="0dp"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="0dp"
         android:layout_weight="1"
-        android:layout_gravity="center_vertical"/>
+        android:hint="@string/upload_form_value"
+        android:inputType="textNoSuggestions" />
 
 </LinearLayout>

@@ -9,12 +9,7 @@ import android.view.View;
 
 public abstract class SimpleAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
-    public interface OnItemClickListener {
-        void OnItemClick(int position);
-    }
-
     private OnItemClickListener mListener;
-
     private FilterAdapterHelper<T> mFilterAdapterHelper;
 
     public SimpleAdapter() {
@@ -59,5 +54,9 @@ public abstract class SimpleAdapter<T, VH extends RecyclerView.ViewHolder> exten
 
     public FilterAdapterHelper<T> getHelper() {
         return mFilterAdapterHelper;
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(int position);
     }
 }

@@ -64,7 +64,7 @@ public class WebViewToolBar extends Toolbar {
         this.progress = progress;
 
         if (progress == 100) {
-            new Handler().postDelayed(new Runnable(){
+            new Handler().postDelayed(new Runnable() {
                 public void run() {
                     drawProgress = false;
                 }

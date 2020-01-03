@@ -19,10 +19,10 @@ import java.util.ArrayList;
 
 import rikka.searchbyimage.R;
 import rikka.searchbyimage.adapter.ResultAdapter;
+import rikka.searchbyimage.utils.BrowsersUtils;
 import rikka.searchbyimage.utils.ClipBoardUtils;
 import rikka.searchbyimage.utils.IntentUtils;
 import rikka.searchbyimage.utils.IqdbResultCollecter;
-import rikka.searchbyimage.utils.BrowsersUtils;
 
 public class IqdbResultActivity extends BaseResultActivity {
 

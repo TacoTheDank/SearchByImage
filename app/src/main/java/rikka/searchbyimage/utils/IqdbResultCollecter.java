@@ -1,6 +1,5 @@
 package rikka.searchbyimage.utils;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,24 +8,6 @@ import java.util.regex.Pattern;
  * Created by Rikka on 2015/12/20.
  */
 public class IqdbResultCollecter {
-    public static class IqdbItem {
-        public String thumbnailURL;
-        public String imageURL;
-        public String size;
-        public String similarity;
-
-        IqdbItem() {
-
-        }
-
-        IqdbItem(String thumbnailURL, String imageURL, String size, String similarity) {
-            this.thumbnailURL = thumbnailURL;
-            this.imageURL = imageURL;
-            this.size = size;
-            this.similarity = similarity;
-        }
-    }
-
     private static final String FIND_HEAD[] = {
             "<div><table><tr><th>Best match</th></tr>",
             "<div><table><tr><th>Additional match</th></tr>",
@@ -34,13 +15,10 @@ public class IqdbResultCollecter {
             "<div><table><tr><td class='image'>"
     };
     private static final String FIND_END = "similarity</td></tr></table></div>";
-
     private static final String URL_HEAD = "<td class='image'><a href=\"";
     private static final String URL_END = "\">";
-
     private static final String THUMBNAIL_HEAD = "<img src='";
     private static final String THUMBNAIL_END = "'";
-
 
     public static ArrayList<IqdbItem> getItemList(String string) {
         ArrayList<IqdbItem> list = new ArrayList<>();
@@ -50,8 +28,7 @@ public class IqdbResultCollecter {
         for (String aFIND_HEAD : FIND_HEAD) {
             findStart = string.indexOf(aFIND_HEAD, findStart);
 
-            while (findStart != -1)
-            {
+            while (findStart != -1) {
                 String lineString = string.substring(findStart, string.indexOf(FIND_END, findStart) + "similarity".length());
 
                 IqdbItem item = new IqdbItem();
@@ -94,5 +71,23 @@ public class IqdbResultCollecter {
         }
 
         return URL;
+    }
+
+    public static class IqdbItem {
+        public String thumbnailURL;
+        public String imageURL;
+        public String size;
+        public String similarity;
+
+        IqdbItem() {
+
+        }
+
+        IqdbItem(String thumbnailURL, String imageURL, String size, String similarity) {
+            this.thumbnailURL = thumbnailURL;
+            this.imageURL = imageURL;
+            this.size = size;
+            this.similarity = similarity;
+        }
     }
 }
