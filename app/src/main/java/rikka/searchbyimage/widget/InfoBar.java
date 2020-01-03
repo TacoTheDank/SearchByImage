@@ -46,7 +46,7 @@ public class InfoBar {
         mView = (InfoBarLayout) inflater.inflate(R.layout.infobar, mTargetParent, false);
         mView.setVisibility(View.GONE);
 
-        mCloseButton = (ImageButton) mView.findViewById(R.id.infobar_close);
+        mCloseButton = mView.findViewById(R.id.infobar_close);
         mCloseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,11 +54,11 @@ public class InfoBar {
             }
         });
 
-        mTextView = (TextView) mView.findViewById(R.id.infobar_text);
+        mTextView = mView.findViewById(R.id.infobar_text);
 
-        mPositiveButton = (Button) mView.findViewById(R.id.infobar_positive);
+        mPositiveButton = mView.findViewById(R.id.infobar_positive);
         mPositiveButton.setVisibility(View.GONE);
-        mNegativeButton = (Button) mView.findViewById(R.id.infobar_negative);
+        mNegativeButton = mView.findViewById(R.id.infobar_negative);
         mNegativeButton.setVisibility(View.GONE);
 
         mTargetParent.addView(mView);

@@ -73,11 +73,11 @@ public class DropDown extends FrameLayout {
         mTitle = a.getString(R.styleable.DropDown_myTitle);
         a.recycle();
 
-        mTitleTextView = (TextView) findViewById(android.R.id.title);
+        mTitleTextView = findViewById(android.R.id.title);
         mTitleTextView.setSingleLine(true);
         mTitleTextView.setText(mTitle);
 
-        mSummaryTextView = (TextView) findViewById(android.R.id.summary);
+        mSummaryTextView = findViewById(android.R.id.summary);
         mSummaryTextView.setSingleLine(true);
     }
 

@@ -144,19 +144,19 @@ public class UploadActivity extends BaseActivity {
             }
         });
 
-        mButton1 = (TextView) findViewById(android.R.id.button1);
-        mButton2 = (TextView) findViewById(android.R.id.button2);
-        mButton3 = (TextView) findViewById(android.R.id.button3);
+        mButton1 = findViewById(android.R.id.button1);
+        mButton2 = findViewById(android.R.id.button2);
+        mButton3 = findViewById(android.R.id.button3);
 
         mOpenSettings = Settings.instance(this).getBoolean(Settings.SETTINGS_EVERY_TIME, false);
         setButtons(false);
 
         mProgressContainer = findViewById(android.R.id.progress);
         mProgress = findViewById(android.R.id.icon1);
-        mProgressIcon = (ImageView) findViewById(android.R.id.icon2);
-        mProgressText = (TextView) findViewById(android.R.id.text1);
+        mProgressIcon = findViewById(android.R.id.icon2);
+        mProgressText = findViewById(android.R.id.text1);
 
-        mImageView = (ImageView) findViewById(android.R.id.icon);
+        mImageView = findViewById(android.R.id.icon);
         mImageView.post(new Runnable() {
             @Override
             public void run() {

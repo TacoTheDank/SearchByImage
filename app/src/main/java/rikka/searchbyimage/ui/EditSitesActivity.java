@@ -53,7 +53,7 @@ public class EditSitesActivity extends BaseActivity {
 
         mDbHelper = DatabaseHelper.instance(this);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -65,9 +65,9 @@ public class EditSitesActivity extends BaseActivity {
         }*/
 
 
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+        mCoordinatorLayout = findViewById(R.id.coordinatorLayout);
 
-        mFAB = (FloatingActionButton) findViewById(R.id.fab);
+        mFAB = findViewById(R.id.fab);
         mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +103,7 @@ public class EditSitesActivity extends BaseActivity {
         });
         mFAB.setLayoutParams(p);*/
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mData = SearchEngine.getList(this);

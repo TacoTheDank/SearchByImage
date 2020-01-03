@@ -157,13 +157,13 @@ public class WebViewActivity extends BaseResultActivity {
 
         mContext = this;
 
-        mToolbar = (WebViewToolBar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         //mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
 
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+        mCoordinatorLayout = findViewById(R.id.coordinatorLayout);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -176,9 +176,9 @@ public class WebViewActivity extends BaseResultActivity {
             }
         });
 
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.view);
+        mAppBarLayout = findViewById(R.id.view);
 
-        mWebView = (WebView) findViewById(R.id.webView);
+        mWebView = findViewById(R.id.webView);
         mWebSettings = mWebView.getSettings();
 
         //mWebView.clearCache(true);

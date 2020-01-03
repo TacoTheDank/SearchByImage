@@ -45,7 +45,7 @@ public class IqdbResultActivity extends BaseResultActivity {
 
         list = loadSearchResult(getIntent().getStringExtra(EXTRA_FILE));
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView = findViewById(R.id.recyclerView);
 
         //mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
             /*mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {

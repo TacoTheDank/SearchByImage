@@ -76,7 +76,7 @@ public class EditSiteInfoActivity extends BaseActivity {
 
         mActivity = this;
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -87,25 +87,25 @@ public class EditSiteInfoActivity extends BaseActivity {
             mToolbar.setNavigationIcon(upArrow);
         }*/
 
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+        mCoordinatorLayout = findViewById(R.id.coordinatorLayout);
 
-        mEditTextName = (EditText) findViewById(R.id.edit_name);
-        mEditTextUrl = (EditText) findViewById(R.id.edit_url);
-        mEditTextFileKey = (EditText) findViewById(R.id.edit_file_key);
+        mEditTextName = findViewById(R.id.edit_name);
+        mEditTextUrl = findViewById(R.id.edit_url);
+        mEditTextFileKey = findViewById(R.id.edit_file_key);
 
-        mFormTitle = (TextView) findViewById(R.id.post_form_title);
+        mFormTitle = findViewById(R.id.post_form_title);
 
-        mTextInputName = (TextInputLayout) findViewById(R.id.textInupt_name);
-        mTextInputUrl = (TextInputLayout) findViewById(R.id.textInput_url);
+        mTextInputName = findViewById(R.id.textInupt_name);
+        mTextInputUrl = findViewById(R.id.textInput_url);
 
-        mSpinner = (DropDown) findViewById(R.id.dropDown);
+        mSpinner = findViewById(R.id.dropDown);
         mSpinner.setAdapter(ArrayAdapter.createFromResource(this,
                 R.array.custom_open_with, android.R.layout.simple_spinner_dropdown_item));
 
         mDbHelper = DatabaseHelper.instance(this);
         mData = SearchEngine.getList(this);
 
-        mFAB = (FloatingActionButton) findViewById(R.id.fab);
+        mFAB = findViewById(R.id.fab);
         mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,7 +128,7 @@ public class EditSiteInfoActivity extends BaseActivity {
             }
         });
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView = findViewById(R.id.recyclerView);
         mLayoutManager = new MyLinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(EditSitesActivity.getAdapter(this));
@@ -337,8 +337,8 @@ public class EditSiteInfoActivity extends BaseActivity {
             View view = mRecyclerView.getChildAt(i);
             if (view == null)
                 continue;
-            EditText key = (EditText) view.findViewById(R.id.editText_key);
-            EditText value = (EditText) view.findViewById(R.id.editText_value);
+            EditText key = view.findViewById(R.id.editText_key);
+            EditText value = view.findViewById(R.id.editText_value);
             if (key != null && value != null) {
                 data.post_text_key.add(key.getEditableText().toString());
                 data.post_text_value.add(value.getEditableText().toString());

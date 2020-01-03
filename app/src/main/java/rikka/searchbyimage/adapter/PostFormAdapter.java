@@ -123,9 +123,9 @@ public class PostFormAdapter extends RecyclerView.Adapter<PostFormAdapter.ViewHo
         public ViewHolder(View itemView) {
             super(itemView);
 
-            vView = (LinearLayout) itemView.findViewById(R.id.linearLayout);
-            vKey = (EditText) itemView.findViewById(R.id.editText_key);
-            vValue = (EditText) itemView.findViewById(R.id.editText_value);
+            vView = itemView.findViewById(R.id.linearLayout);
+            vKey = itemView.findViewById(R.id.editText_key);
+            vValue = itemView.findViewById(R.id.editText_value);
         }
     }
 }

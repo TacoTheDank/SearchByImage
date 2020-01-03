@@ -23,7 +23,7 @@ import rikka.searchbyimage.utils.ParcelableUtils;
  */
 public class SearchEngine implements Observable {
     public static final int DEFAULT_ENGINE_ICON = R.drawable.ic_icon_other_24dp;
-    public static final int BUILD_IN_ENGINE_ICONS[] = {
+    public static final int[] BUILD_IN_ENGINE_ICONS = {
             R.drawable.ic_icon_google_24dp,
             DEFAULT_ENGINE_ICON,
             DEFAULT_ENGINE_ICON,
@@ -38,7 +38,7 @@ public class SearchEngine implements Observable {
     public final static int SITE_SAUCENAO = 4;
     public final static int SITE_ASCII2D = 5;
     public final static int SITE_CUSTOM_START = 6;
-    private static final String BUILD_IN_ENGINE_URL[] = {
+    private static final String[] BUILD_IN_ENGINE_URL = {
             "https://www.google.com/searchbyimage/upload",
             "http://image.baidu.com/pictureup/uploadwise",
             "https://iqdb.org/",
@@ -46,7 +46,7 @@ public class SearchEngine implements Observable {
             "https://saucenao.com/search.php",
             "https://www.ascii2d.net/search/file"
     };
-    private static final String BUILD_IN_ENGINE_NAME[] = {
+    private static final String[] BUILD_IN_ENGINE_NAME = {
             "Google",
             "Baidu",
             "iqdb",
@@ -54,7 +54,7 @@ public class SearchEngine implements Observable {
             "SauceNAO",
             "ascii2d"
     };
-    private static final String BUILD_IN_ENGINE_FILE_KEY[] = {
+    private static final String[] BUILD_IN_ENGINE_FILE_KEY = {
             "encoded_image",
             "upload",
             "file",
@@ -62,7 +62,7 @@ public class SearchEngine implements Observable {
             "file",
             "file"
     };
-    private static final int BUILD_IN_ENGINE_OPEN_ACTION[] = {
+    private static final int[] BUILD_IN_ENGINE_OPEN_ACTION = {
             RESULT_OPEN_ACTION.DEFAULT,
             RESULT_OPEN_ACTION.DEFAULT,
             RESULT_OPEN_ACTION.BUILD_IN_IQDB,

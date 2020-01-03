@@ -15,6 +15,6 @@ public class ListBottomSheetItemViewHolder extends RecyclerView.ViewHolder {
     public ListBottomSheetItemViewHolder(View itemView) {
         super(itemView);
 
-        text = (TextView) itemView.findViewById(android.R.id.text1);
+        text = itemView.findViewById(android.R.id.text1);
     }
 }

@@ -95,11 +95,11 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         public ViewHolder(View itemView) {
             super(itemView);
 
-            mView = (RelativeLayout) itemView.findViewById(R.id.view);
-            mTextViewURL = (TextView) itemView.findViewById(R.id.item_text_url);
-            mTextViewSize = (TextView) itemView.findViewById(R.id.item_text_size);
-            mTextViewSimilarity = (TextView) itemView.findViewById(R.id.item_text_similarity);
-            mImageView = (ImageView) itemView.findViewById(R.id.item_image);
+            mView = itemView.findViewById(R.id.view);
+            mTextViewURL = itemView.findViewById(R.id.item_text_url);
+            mTextViewSize = itemView.findViewById(R.id.item_text_size);
+            mTextViewSimilarity = itemView.findViewById(R.id.item_text_similarity);
+            mImageView = itemView.findViewById(R.id.item_image);
         }
     }
 }
