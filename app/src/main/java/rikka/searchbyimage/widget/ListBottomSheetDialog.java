@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.List;
 
 import rikka.searchbyimage.R;
-import rikka.searchbyimage.apdater.SimpleAdapter;
+import rikka.searchbyimage.adapter.SimpleAdapter;
 import rikka.searchbyimage.utils.Utils;
 import rikka.searchbyimage.viewholder.ListBottomSheetItemViewHolder;
 

@@ -12,11 +12,11 @@
 
         <variable
             name="Listener"
-            type="rikka.searchbyimage.apdater.SearchEngineAdapter.ViewHolder.Listener" />
+            type="rikka.searchbyimage.adapter.SearchEngineAdapter.ViewHolder.Listener" />
 
         <variable
             name="LayoutStyle"
-            type="rikka.searchbyimage.apdater.SearchEngineAdapter.ViewHolder.LayoutStyle" />
+            type="rikka.searchbyimage.adapter.SearchEngineAdapter.ViewHolder.LayoutStyle" />
     </data>
 
     <LinearLayout

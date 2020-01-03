@@ -18,7 +18,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 import rikka.searchbyimage.R;
-import rikka.searchbyimage.apdater.ResultAdapter;
+import rikka.searchbyimage.adapter.ResultAdapter;
 import rikka.searchbyimage.utils.ClipBoardUtils;
 import rikka.searchbyimage.utils.IntentUtils;
 import rikka.searchbyimage.utils.IqdbResultCollecter;

@@ -35,7 +35,7 @@ import rikka.searchbyimage.BuildConfig;
 import rikka.searchbyimage.R;
 import rikka.searchbyimage.database.DatabaseHelper;
 import rikka.searchbyimage.database.table.CustomEngineTable;
-import rikka.searchbyimage.apdater.PostFormAdapter;
+import rikka.searchbyimage.adapter.PostFormAdapter;
 import rikka.searchbyimage.utils.ParcelableUtils;
 import rikka.searchbyimage.utils.BrowsersUtils;
 

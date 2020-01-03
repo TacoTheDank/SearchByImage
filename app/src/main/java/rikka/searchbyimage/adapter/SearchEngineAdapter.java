@@ -1,4 +1,4 @@
-package rikka.searchbyimage.apdater;
+package rikka.searchbyimage.adapter;
 
 import android.databinding.Bindable;
 import android.databinding.Observable;
