@@ -25,6 +25,7 @@ public class CustomTabsHelper {
     private static final String DEV_PACKAGE = "com.chrome.dev";
     private static final String CANARY_PACKAGE = "com.chrome.canary";
     private static final String LOCAL_PACKAGE = "com.google.android.apps.chrome";
+    private static final String BROMITE_PACKAGE = "org.bromite.bromite";
     private static final String TAG = "CustomTabsHelper";
     private static final String EXTRA_CUSTOM_TABS_KEEP_ALIVE =
             "android.support.customtabs.extra.KEEP_ALIVE";
@@ -94,6 +95,8 @@ public class CustomTabsHelper {
             sPackageNameToUse = CANARY_PACKAGE;
         } else if (packagesSupportingCustomTabs.contains(LOCAL_PACKAGE)) {
             sPackageNameToUse = LOCAL_PACKAGE;
+        } else if (packagesSupportingCustomTabs.contains(BROMITE_PACKAGE)) {
+            sPackageNameToUse = BROMITE_PACKAGE;
         }
         return sPackageNameToUse;
     }
@@ -130,7 +133,7 @@ public class CustomTabsHelper {
      * @return All possible chrome package names that provide custom tabs feature.
      */
     private static String[] getPackages() {
-        return new String[]{"", STABLE_PACKAGE, BETA_PACKAGE, DEV_PACKAGE, CANARY_PACKAGE, LOCAL_PACKAGE};
+        return new String[]{"", STABLE_PACKAGE, BETA_PACKAGE, DEV_PACKAGE, CANARY_PACKAGE, LOCAL_PACKAGE, BROMITE_PACKAGE};
     }
 
     public static boolean getIsChromeInstalled(Context context) {
