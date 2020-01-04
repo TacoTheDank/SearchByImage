@@ -43,24 +43,22 @@ public class Settings {
         return mPrefs.edit();
     }
 
-    public Settings putBoolean(String key, boolean value) {
+    public void putBoolean(String key, boolean value) {
         mPrefs.edit()
                 .putBoolean(key, value)
                 .apply();
 
-        return this;
     }
 
     public boolean getBoolean(String key, boolean def) {
         return mPrefs.getBoolean(key, def);
     }
 
-    public Settings putInt(String key, int value) {
+    public void putInt(String key, int value) {
         mPrefs.edit()
                 .putInt(key, value)
                 .apply();
 
-        return this;
     }
 
     public int getInt(String key, int defValue) {
@@ -90,8 +88,8 @@ public class Settings {
     public int getIntFromString(String key, int defValue) {
         return Integer.parseInt(mPrefs.getString(key, Integer.toString(defValue)));
     }
-
-    /*public Settings putGSON(String key, Object obj) {
+/*
+    public Settings putGSON(String key, Object obj) {
         mPrefs.edit()
                 .putString(key, new Gson().toJson(obj))
                 .apply();
@@ -100,7 +98,7 @@ public class Settings {
     }
 
     public <T> T getGSON(String key, Class<T> c) {
-        T t = new Gson().fromJson(mPrefs.getString(key, ""), c);
-        return t;
-    }*/
+        return new Gson().fromJson(mPrefs.getString(key, ""), c);
+    }
+*/
 }

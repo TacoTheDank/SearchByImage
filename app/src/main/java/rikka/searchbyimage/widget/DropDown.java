@@ -60,12 +60,7 @@ public class DropDown extends FrameLayout {
         });
         addView(mSpinner);
 
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSpinner.performClick();
-            }
-        });
+        setOnClickListener(v -> mSpinner.performClick());
 
         LayoutInflater.from(context).inflate(R.layout.drop_down, this);
 

@@ -14,11 +14,10 @@ import rikka.searchbyimage.staticdata.SearchEngine;
  * Created by Rikka on 2016/1/26.
  */
 public class PostFormAdapter extends RecyclerView.Adapter<PostFormAdapter.ViewHolder> {
-    SearchEngine mData;
-    boolean mEnabled;
-    PostFormAdapter mAdapter;
-    int mCount;
-    RecyclerView mRecyclerView;
+    private SearchEngine mData;
+    private boolean mEnabled;
+    private PostFormAdapter mAdapter;
+    private int mCount;
     private OnFocusChangeListener mOnFocusChangeListener;
 
     public PostFormAdapter(SearchEngine data, boolean enabled) {
@@ -56,12 +55,9 @@ public class PostFormAdapter extends RecyclerView.Adapter<PostFormAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, final int position) {
         if (position == (getItemCount() - 1)) {
             if (mEnabled) {
-                holder.vView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mAdapter.notifyItemInserted(mCount - 1);
-                        mCount++;
-                    }
+                holder.vView.setOnClickListener(v -> {
+                    mAdapter.notifyItemInserted(mCount - 1);
+                    mCount++;
                 });
             } else {
                 holder.vView.setVisibility(View.GONE);
@@ -78,20 +74,14 @@ public class PostFormAdapter extends RecyclerView.Adapter<PostFormAdapter.ViewHo
                 }
             }
 
-            holder.vKey.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (mOnFocusChangeListener != null) {
-                        mOnFocusChangeListener.onFocusChange(v, hasFocus);
-                    }
+            holder.vKey.setOnFocusChangeListener((v, hasFocus) -> {
+                if (mOnFocusChangeListener != null) {
+                    mOnFocusChangeListener.onFocusChange(v, hasFocus);
                 }
             });
-            holder.vValue.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (mOnFocusChangeListener != null) {
-                        mOnFocusChangeListener.onFocusChange(v, hasFocus);
-                    }
+            holder.vValue.setOnFocusChangeListener((v, hasFocus) -> {
+                if (mOnFocusChangeListener != null) {
+                    mOnFocusChangeListener.onFocusChange(v, hasFocus);
                 }
             });
 
@@ -115,12 +105,12 @@ public class PostFormAdapter extends RecyclerView.Adapter<PostFormAdapter.ViewHo
         void onFocusChange(View view, boolean hasFocus);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        protected LinearLayout vView;
-        protected EditText vKey;
-        protected EditText vValue;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout vView;
+        EditText vKey;
+        EditText vValue;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
             vView = itemView.findViewById(R.id.linearLayout);

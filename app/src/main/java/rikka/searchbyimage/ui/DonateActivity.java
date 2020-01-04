@@ -1,6 +1,5 @@
 package rikka.searchbyimage.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,10 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
-import com.android.vending.billing.IabResult;
-import com.android.vending.billing.Inventory;
-import com.android.vending.billing.Purchase;
 
 import rikka.searchbyimage.BuildConfig;
 import rikka.searchbyimage.R;
@@ -32,8 +27,6 @@ public class DonateActivity extends BaseActivity {
             SKU_DONATE_5,
             SKU_DONATE_10,
     };
-    private View mButtonPlay;
-    private View mButtonAlipay;
     private IabHelperWrapper mIabHelperWrapper;
 
     @Override
@@ -48,36 +41,31 @@ public class DonateActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mIabHelperWrapper = new IabHelperWrapper(this, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo1u82whWExfU5LtocWOLQKxLW0BpQbgiQiySHrgQikLEOgpi/s4mbRuB6cB4jsLOCp/mzoVlb/NhTx3w3VaoCZr51EwpKq5+zqcf2s2ZdTtM7tbQxlfUKSRLxP+MwGq59nIMfDkXc7kDOwtBRQKLxCacT0IEX/tj1BkQcVjv40rKBPnHqdf4gL7wE7Ch+Z+AL9OiGTLVYDb1g8HUjdNyMShrcUgX5luP7HIeIKJ8nUMForqNTM7Hpr9JdXPmkb/InYCzoYXklA5CrfTUTMT0I+SqfxyPMLIFmURKysveKKBJk3mtIH4wYabmK+XuUVYJxVfZDhAqF4SLMqrBbOZ6OQIDAQAB", new IabHelperWrapper.OnQueryInventoryFinishedListener() {
-            @Override
-            public void onFinished(IabHelperWrapper iabHelperWrapper, IabResult result, Inventory inventory) {
-                if (result.isFailure()) {
-                    return;
-                }
-
-                iabHelperWrapper.consume(inventory.getPurchase(SKU_DONATE_1));
-                iabHelperWrapper.consume(inventory.getPurchase(SKU_DONATE_2));
-                iabHelperWrapper.consume(inventory.getPurchase(SKU_DONATE_5));
-                iabHelperWrapper.consume(inventory.getPurchase(SKU_DONATE_10));
-            }
-        });
-
-        mButtonPlay = findViewById(android.R.id.button1);
-        mButtonAlipay = findViewById(android.R.id.button2);
-
-        mButtonPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!BuildConfig.hideOtherEngine && !BuildConfig.DEBUG) {
-                    Toast.makeText(v.getContext(), R.string.donate_play_required, Toast.LENGTH_SHORT).show();
-                } else {
-                    if (!mIabHelperWrapper.isSuccess()) {
-                        Toast.makeText(v.getContext(), R.string.pay_gp_set_up_failed, Toast.LENGTH_SHORT).show();
+        mIabHelperWrapper = new IabHelperWrapper(this, "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo1u82whWExfU5LtocWOLQKxLW0BpQbgiQiySHrgQikLEOgpi/s4mbRuB6cB4jsLOCp/mzoVlb/NhTx3w3VaoCZr51EwpKq5+zqcf2s2ZdTtM7tbQxlfUKSRLxP+MwGq59nIMfDkXc7kDOwtBRQKLxCacT0IEX/tj1BkQcVjv40rKBPnHqdf4gL7wE7Ch+Z+AL9OiGTLVYDb1g8HUjdNyMShrcUgX5luP7HIeIKJ8nUMForqNTM7Hpr9JdXPmkb/InYCzoYXklA5CrfTUTMT0I+SqfxyPMLIFmURKysveKKBJk3mtIH4wYabmK+XuUVYJxVfZDhAqF4SLMqrBbOZ6OQIDAQAB",
+                (iabHelperWrapper, result, inventory) -> {
+                    if (result.isFailure()) {
                         return;
                     }
 
-                    showPlayDialog();
+                    iabHelperWrapper.consume(inventory.getPurchase(SKU_DONATE_1));
+                    iabHelperWrapper.consume(inventory.getPurchase(SKU_DONATE_2));
+                    iabHelperWrapper.consume(inventory.getPurchase(SKU_DONATE_5));
+                    iabHelperWrapper.consume(inventory.getPurchase(SKU_DONATE_10));
+                });
+
+        View mButtonPlay = findViewById(android.R.id.button1);
+        View mButtonAlipay = findViewById(android.R.id.button2);
+
+        mButtonPlay.setOnClickListener(v -> {
+            if (!BuildConfig.hideOtherEngine && !BuildConfig.DEBUG) {
+                Toast.makeText(v.getContext(), R.string.donate_play_required, Toast.LENGTH_SHORT).show();
+            } else {
+                if (!mIabHelperWrapper.isSuccess()) {
+                    Toast.makeText(v.getContext(), R.string.pay_gp_set_up_failed, Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
+                showPlayDialog();
             }
         });
 
@@ -85,27 +73,24 @@ public class DonateActivity extends BaseActivity {
             mButtonAlipay.setVisibility(View.GONE);
         }
 
-        mButtonAlipay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!PackageUtils.isPackageInstalled(v.getContext(), "com.eg.android.AlipayGphone")) {
-                    Toast.makeText(v.getContext(), "您没有安装支付宝客户端。", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        mButtonAlipay.setOnClickListener(v -> {
+            if (!PackageUtils.isPackageInstalled(v.getContext(), "com.eg.android.AlipayGphone")) {
+                Toast.makeText(v.getContext(), "您没有安装支付宝客户端。", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                if (!PackageUtils.isPackageEnabled(v.getContext(), "com.eg.android.AlipayGphone")) {
-                    Toast.makeText(v.getContext(), "您的支付宝客户端已被禁用。", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+            if (!PackageUtils.isPackageEnabled(v.getContext(), "com.eg.android.AlipayGphone")) {
+                Toast.makeText(v.getContext(), "您的支付宝客户端已被禁用。", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("alipayqr://platformapi/startapp?saId=10000007&qrcode=https%3A%2F%2Fqr.alipay.com%2Faex01083scje5axcttivf13")));
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("alipayqr://platformapi/startapp?saId=10000007&qrcode=https%3A%2F%2Fqr.alipay.com%2Faex01083scje5axcttivf13")));
 
-                    Settings.instance(v.getContext()).putBoolean(Settings.DONATED, true);
-                    findViewById(android.R.id.text1).setVisibility(View.VISIBLE);
-                } catch (Exception ignored) {
-                }
+                Settings.instance(v.getContext()).putBoolean(Settings.DONATED, true);
+                findViewById(android.R.id.text1).setVisibility(View.VISIBLE);
+            } catch (Exception ignored) {
             }
         });
 
@@ -116,24 +101,17 @@ public class DonateActivity extends BaseActivity {
 
     private void showPlayDialog() {
         new AlertDialog.Builder(this)
-                .setItems(new CharSequence[]{"1 USD", "2 USD", "5 USD", "10 USD"}, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mIabHelperWrapper.purchase(DonateActivity.this, SKU_DONATE[which], new IabHelperWrapper.OnPurchaseSuccessListener() {
-                            @Override
-                            public void onSuccess(IabHelperWrapper iabHelperWrapper, Purchase purchase) {
-                                iabHelperWrapper.consume(purchase);
+                .setItems(new CharSequence[]{"1 USD", "2 USD", "5 USD", "10 USD"}, (dialog, which) ->
+                        mIabHelperWrapper.purchase(DonateActivity.this, SKU_DONATE[which], (iabHelperWrapper, purchase) -> {
+                            iabHelperWrapper.consume(purchase);
 
-                                Settings.instance(getApplicationContext()).putBoolean(Settings.DONATED, true);
-                                Settings.instance(getApplicationContext()).putBoolean(Settings.HIDE_DONATE_REQUEST, true);
+                            Settings.instance(getApplicationContext()).putBoolean(Settings.DONATED, true);
+                            Settings.instance(getApplicationContext()).putBoolean(Settings.HIDE_DONATE_REQUEST, true);
 
-                                if (!isFinishing()) {
-                                    findViewById(android.R.id.text1).setVisibility(View.VISIBLE);
-                                }
+                            if (!isFinishing()) {
+                                findViewById(android.R.id.text1).setVisibility(View.VISIBLE);
                             }
-                        });
-                    }
-                })
+                        }))
                 .show();
     }
 
@@ -157,10 +135,8 @@ public class DonateActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }

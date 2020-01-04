@@ -21,7 +21,7 @@ public class IntentUtils {
         return activities.size();
     }
 
-    public static boolean canOpenWith(Context context, Intent intent) {
+    private static boolean canOpenWith(Context context, Intent intent) {
         return canOpenWith(context, intent, 0);
     }
 
@@ -39,7 +39,7 @@ public class IntentUtils {
         startOtherActivity(context, intent, context.getString(R.string.target_app_not_found));
     }
 
-    public static void startOtherActivity(Context context, Intent intent, String notFoundMessage) {
+    private static void startOtherActivity(Context context, Intent intent, String notFoundMessage) {
         if (canOpenWith(context, intent)) {
             if (!(context instanceof Activity)) {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -54,7 +54,7 @@ public class IntentUtils {
         startOtherActivityForResult(activity, intent, requestCode, activity.getString(R.string.target_app_not_found));
     }
 
-    public static void startOtherActivityForResult(Activity activity, Intent intent, int requestCode, String notFoundMessage) {
+    private static void startOtherActivityForResult(Activity activity, Intent intent, int requestCode, String notFoundMessage) {
         if (canOpenWith(activity, intent)) {
             activity.startActivityForResult(intent, requestCode);
         } else {

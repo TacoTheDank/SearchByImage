@@ -144,7 +144,7 @@ public class UploadResultUtils {
         }
     }
 
-    public static void handleResult(Context context, UploadResult result, boolean background) {
+    private static void handleResult(Context context, UploadResult result, boolean background) {
         String errorMessage = null;
         int errorCode = result.getErrorCode();
         Intent intent = null;
@@ -221,7 +221,7 @@ public class UploadResultUtils {
             notificationManager.notify(code, notification);
         } else {
             if (errorCode != UploadResult.NO_ERROR) {
-                if (errorCode != UploadResult.CANCELED) {
+                if (errorCode != UploadResult.CANCELLED) {
                     Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show();
                 }
                 return;

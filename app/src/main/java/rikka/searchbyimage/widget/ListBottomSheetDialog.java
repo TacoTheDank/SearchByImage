@@ -77,12 +77,9 @@ public class ListBottomSheetDialog extends BottomSheetDialog {
         };
 
         adapter.getHelper().setOriginalData(list);
-        adapter.setOnItemClickListener(new SimpleAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(int position) {
-                if (listener != null) {
-                    listener.onClick(ListBottomSheetDialog.this, position);
-                }
+        adapter.setOnItemClickListener(position -> {
+            if (listener != null) {
+                listener.onClick(ListBottomSheetDialog.this, position);
             }
         });
 
@@ -98,7 +95,7 @@ public class ListBottomSheetDialog extends BottomSheetDialog {
         private Drawable icon;
         private String text;
 
-        public Data(String text, Drawable icon) {
+        Data(String text, Drawable icon) {
             this.icon = icon;
             this.text = text;
         }
@@ -144,7 +141,7 @@ public class ListBottomSheetDialog extends BottomSheetDialog {
         }
 
         public Builder setItems(Collection<CharSequence> items) {
-            return setItems(items.toArray(new CharSequence[items.size()]));
+            return setItems(items.toArray(new CharSequence[0]));
         }
 
         /*public Builder setItems(Collection<CharSequence> items) {
@@ -178,7 +175,7 @@ public class ListBottomSheetDialog extends BottomSheetDialog {
         }
 
         public Builder setIcons(Collection<Integer> items) {
-            return setIcons(items.toArray(new Integer[items.size()]));
+            return setIcons(items.toArray(new Integer[0]));
         }
 
         private Builder setIcons(@DrawableRes Integer[] resId) {

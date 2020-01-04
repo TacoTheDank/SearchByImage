@@ -12,7 +12,6 @@ import android.widget.CompoundButton;
 
 import java.util.List;
 
-import rikka.searchbyimage.BR;
 import rikka.searchbyimage.BuildConfig;
 import rikka.searchbyimage.R;
 import rikka.searchbyimage.databinding.ListItemEditSitesBinding;
@@ -27,8 +26,8 @@ public class SearchEngineAdapter extends RecyclerView.Adapter<SearchEngineAdapte
     private static final int VIEW_TYPE_HEADER_CUSTOM = 1 << 2;
     private static final int VIEW_TYPE_EMPTY = 1 << 3;
     private static final int BUILT_IN_ENGINES = (BuildConfig.hideOtherEngine ? 1 : 6);
-    protected OnItemClickListener mOnItemClickListener;
-    protected ShowMessage showMessage;
+    private OnItemClickListener mOnItemClickListener;
+    private ShowMessage showMessage;
     private List<SearchEngine> mData;
 
     public SearchEngineAdapter(List<SearchEngine> data) {
@@ -116,7 +115,7 @@ public class SearchEngineAdapter extends RecyclerView.Adapter<SearchEngineAdapte
 
         private ListItemEditSitesBinding binding;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             binding = ListItemEditSitesBinding.bind(itemView);
         }
@@ -155,16 +154,6 @@ public class SearchEngineAdapter extends RecyclerView.Adapter<SearchEngineAdapte
             public String getHeadText() {
                 return (viewType & VIEW_TYPE_HEADER_BUILT_IN) >= 1 ?
                         itemView.getContext().getString(R.string.built_in) : itemView.getContext().getString(R.string.custom);
-            }
-
-            @Bindable
-            public int getViewType() {
-                return viewType;
-            }
-
-            public void setViewType(int viewType) {
-                this.viewType = viewType;
-                pcr.notifyChange(this, BR.viewType);
             }
 
             @Bindable

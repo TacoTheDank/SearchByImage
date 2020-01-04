@@ -6,7 +6,6 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -67,9 +66,6 @@ import rikka.searchbyimage.widget.ListBottomSheetDialog;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 import static rikka.searchbyimage.staticdata.EngineId.SITE_IQDB;
@@ -137,12 +133,7 @@ public class UploadActivity extends BaseActivity {
             }
         });
 
-        ((View) findViewById(R.id.bottom_sheet).getParent()).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-            }
-        });
+        ((View) findViewById(R.id.bottom_sheet).getParent()).setOnClickListener(v -> mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN));
 
         mButton1 = findViewById(android.R.id.button1);
         mButton2 = findViewById(android.R.id.button2);
@@ -157,29 +148,18 @@ public class UploadActivity extends BaseActivity {
         mProgressText = findViewById(android.R.id.text1);
 
         mImageView = findViewById(android.R.id.icon);
-        mImageView.post(new Runnable() {
-            @Override
-            public void run() {
-                mImageView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (mImageView.getWidth() * 0.5625)));
-                setBottomSheetPeekHeight();
-            }
+        mImageView.post(() -> {
+            mImageView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (mImageView.getWidth() * 0.5625)));
+            setBottomSheetPeekHeight();
         });
 
         mCropButton = findViewById(android.R.id.closeButton);
         mCropButton.setVisibility(View.INVISIBLE);
         mCropButton.setEnabled(false);
-        mCropButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startCrop(true);
-            }
-        });
-        mCropButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                startCrop(false);
-                return true;
-            }
+        mCropButton.setOnClickListener(v -> startCrop(true));
+        mCropButton.setOnLongClickListener(v -> {
+            startCrop(false);
+            return true;
         });
 
         Intent intent = getIntent();
@@ -264,12 +244,9 @@ public class UploadActivity extends BaseActivity {
     }
 
     private void setBottomSheetPeekHeight() {
-        getWindow().getDecorView().post(new Runnable() {
-            @Override
-            public void run() {
-                mBottomSheetBehavior.setPeekHeight(findViewById(R.id.bottom_sheet).getHeight());
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            }
+        getWindow().getDecorView().post(() -> {
+            mBottomSheetBehavior.setPeekHeight(findViewById(R.id.bottom_sheet).getHeight());
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         });
     }
 
@@ -317,65 +294,51 @@ public class UploadActivity extends BaseActivity {
             TextViewCompat.setCompoundDrawablesRelativeWithIntrinsicBounds(mButton1,
                     getDrawableAndSetTint(R.drawable.ic_file_upload_24dp), null, null, null);
             mButton1.setText(R.string.start_upload);
-            mButton1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startUpload();
-                }
-            });
+            mButton1.setOnClickListener(v -> startUpload());
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             int id = Integer.parseInt(preferences.getString(Settings.ENGINE_ID, "0"));
             setSearchEngineButton(id);
-            mButton2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final List<Integer> id = new ArrayList<>();
-                    List<Integer> icons = new ArrayList<>();
-                    List<CharSequence> texts = new ArrayList<>();
-                    for (SearchEngine item : SearchEngine.getList(v.getContext())) {
-                        if (item.getEnabled() != 1) {
-                            continue;
-                        }
-
-                        texts.add(item.getName());
-                        id.add(item.getId());
-                        if (item.getId() < SearchEngine.SITE_CUSTOM_START) {
-                            icons.add(SearchEngine.BUILD_IN_ENGINE_ICONS[item.getId()]);
-                        } else {
-                            icons.add(SearchEngine.DEFAULT_ENGINE_ICON);
-                        }
+            mButton2.setOnClickListener(v -> {
+                final List<Integer> id1 = new ArrayList<>();
+                List<Integer> icons = new ArrayList<>();
+                List<CharSequence> texts = new ArrayList<>();
+                for (SearchEngine item : SearchEngine.getList(v.getContext())) {
+                    if (item.getEnabled() != 1) {
+                        continue;
                     }
 
-                    new ListBottomSheetDialog.Builder(v.getContext())
-                            .setItems(texts)
-                            .setIcons(icons)
-                            .setOnClickListener(new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    setSearchEngineButton(id.get(which));
-                                    Settings.instance(getApplicationContext())
-                                            .edit()
-                                            .putString(Settings.ENGINE_ID, Integer.toString(id.get(which)))
-                                            .putString("search_engine_id", Integer.toString(id.get(which)))
-                                            .apply();
-                                    dialog.dismiss();
-                                }
-                            })
-                            .show();
+                    texts.add(item.getName());
+                    id1.add(item.getId());
+                    if (item.getId() < SearchEngine.SITE_CUSTOM_START) {
+                        icons.add(SearchEngine.BUILD_IN_ENGINE_ICONS[item.getId()]);
+                    } else {
+                        icons.add(SearchEngine.DEFAULT_ENGINE_ICON);
+                    }
                 }
+
+                new ListBottomSheetDialog.Builder(v.getContext())
+                        .setItems(texts)
+                        .setIcons(icons)
+                        .setOnClickListener((dialog, which) -> {
+                            setSearchEngineButton(id1.get(which));
+                            Settings.instance(getApplicationContext())
+                                    .edit()
+                                    .putString(Settings.ENGINE_ID, Integer.toString(id1.get(which)))
+                                    .putString("search_engine_id", Integer.toString(id1.get(which)))
+                                    .apply();
+                            dialog.dismiss();
+                        })
+                        .show();
             });
 
             TextViewCompat.setCompoundDrawablesRelativeWithIntrinsicBounds(mButton3,
                     getDrawableAndSetTint(R.drawable.ic_settings_24dp), null, null, null);
             mButton3.setText(R.string.upload_settings);
-            mButton3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    intent.putExtra(MainActivity.EXTRA_MINI, true);
-                    startActivity(intent);
-                }
+            mButton3.setOnClickListener(v -> {
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                intent.putExtra(MainActivity.EXTRA_MINI, true);
+                startActivity(intent);
             });
         } else {
             setBottomSheetPeekHeight();
@@ -387,24 +350,16 @@ public class UploadActivity extends BaseActivity {
             TextViewCompat.setCompoundDrawablesRelativeWithIntrinsicBounds(mButton1,
                     getDrawableAndSetTint(R.drawable.ic_all_out_24dp), null, null, null);
             mButton1.setText(R.string.upload_background);
-            mButton1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
+            mButton1.setOnClickListener(v -> finish());
 
             TextViewCompat.setCompoundDrawablesRelativeWithIntrinsicBounds(mButton3,
                     getDrawableAndSetTint(R.drawable.ic_clear_24dp), null, null, null);
             mButton3.setText(android.R.string.cancel);
-            mButton3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (sUploadBinder != null) {
-                        sUploadBinder.cancelTask(mFileToUpload.getName());
-                    }
-                    finish();
+            mButton3.setOnClickListener(v -> {
+                if (sUploadBinder != null) {
+                    sUploadBinder.cancelTask(mFileToUpload.getName());
                 }
+                finish();
             });
 
             mCropButton.setVisibility(View.GONE);
@@ -436,35 +391,27 @@ public class UploadActivity extends BaseActivity {
 
     private void saveImage(Uri uri) {
         Observable.just(uri)
-                .map(new Func1<Uri, File>() {
-                    @Override
-                    public File call(Uri uri) {
-                        File path = getExternalCacheDir();
-                        if (path == null) {
-                            path = getFilesDir();
-                        }
+                .map(uri1 -> {
+                    File path = getExternalCacheDir();
+                    if (path == null) {
+                        path = getFilesDir();
+                    }
 
-                        try {
-                            String time = Long.toString(System.currentTimeMillis());
-                            String filename = FilenameResolver.query(getContentResolver(), uri);
-                            mFilename = TextUtils.isEmpty(filename) ? (mFilename == null ? time : mFilename) : filename;
+                    try {
+                        String time = Long.toString(System.currentTimeMillis());
+                        String filename = FilenameResolver.query(getContentResolver(), uri1);
+                        mFilename = TextUtils.isEmpty(filename) ? (mFilename == null ? time : mFilename) : filename;
 
-                            return Utils.streamToFile(
-                                    getContentResolver().openInputStream(uri),
-                                    // TODO should give a different path if getExternalCacheDir() return null (for file provider)
-                                    path + "/images/" + time);
-                        } catch (Exception e) {
-                            return null;
-                        }
+                        return Utils.streamToFile(
+                                getContentResolver().openInputStream(uri1),
+                                // TODO should give a different path if getExternalCacheDir() return null (for file provider)
+                                path + "/images/" + time);
+                    } catch (Exception e) {
+                        return null;
                     }
                 })
                 .subscribeOn(Schedulers.io())
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        setProgress(R.string.upload_getting_image, 0);
-                    }
-                })
+                .doOnSubscribe(() -> setProgress(R.string.upload_getting_image, 0))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<File>() {
                     @Override
@@ -482,14 +429,11 @@ public class UploadActivity extends BaseActivity {
 
                             new RxPermissions(UploadActivity.this)
                                     .request(Manifest.permission.READ_EXTERNAL_STORAGE)
-                                    .subscribe(new Action1<Boolean>() {
-                                        @Override
-                                        public void call(Boolean granted) {
-                                            if (granted) {
-                                                saveImage(mUri);
-                                            } else {
-                                                setProgress(R.string.upload_permission_denied, R.drawable.ic_error_24dp);
-                                            }
+                                    .subscribe(granted -> {
+                                        if (granted) {
+                                            saveImage(mUri);
+                                        } else {
+                                            setProgress(R.string.upload_permission_denied, R.drawable.ic_error_24dp);
                                         }
                                     });
                         } else {
@@ -583,8 +527,8 @@ public class UploadActivity extends BaseActivity {
         List<Pair<String, String>> body = new ArrayList<>();
         switch (item.getId()) {
             case SITE_IQDB:
-                Set<String> iqdb_service = preferences.getStringSet("iqdb_service", new HashSet<String>());
-                String[] selected = iqdb_service.toArray(new String[iqdb_service.size()]);
+                Set<String> iqdb_service = preferences.getStringSet("iqdb_service", new HashSet<>());
+                String[] selected = iqdb_service.toArray(new String[0]);
 
                 for (String aSelected : selected) {
                     body.add(new Pair<>("service[]", aSelected));
@@ -615,7 +559,7 @@ public class UploadActivity extends BaseActivity {
                 item.getUploadUrl(),
                 item.getPostFileKey(),
                 body,
-                new ArrayList<Pair<String, String>>(),
+                new ArrayList<>(),
                 item.getResultOpenAction());
     }
 

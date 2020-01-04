@@ -29,10 +29,10 @@ public class CustomTabActivityHelper {
      * @param uri              the Uri to be opened
      * @param fallback         a CustomTabFallback to be used if Custom Tabs is not available
      */
-    public static void openCustomTab(Activity activity,
-                                     CustomTabsIntent customTabsIntent,
-                                     Uri uri,
-                                     CustomTabFallback fallback) {
+    static void openCustomTab(Activity activity,
+                              CustomTabsIntent customTabsIntent,
+                              Uri uri,
+                              CustomTabFallback fallback) {
         String packageName = CustomTabsHelper.getPackageNameToUse(activity);
 
         //If we cant find a package name, it means there's no browser that supports
@@ -65,7 +65,7 @@ public class CustomTabActivityHelper {
      *
      * @return a CustomTabsSession
      */
-    public CustomTabsSession getSession() {
+    private CustomTabsSession getSession() {
         if (mClient == null) {
             mCustomTabsSession = null;
         } else if (mCustomTabsSession == null) {

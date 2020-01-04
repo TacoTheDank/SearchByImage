@@ -97,7 +97,6 @@ public class WebViewActivity extends BaseResultActivity {
     private String htmlFilePath;
     private String mImageUrl;
     private String baseUrl;
-    private int siteId;
     private boolean mNormalMode = true;
     private DownloadManager mDownloadManager;
     private long downloadReference;
@@ -114,7 +113,7 @@ public class WebViewActivity extends BaseResultActivity {
                 case 1: {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
                             ContextCompat.checkSelfPermission(WebViewActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        getPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                        getPermission();
                         break;
                     }
 
@@ -165,15 +164,12 @@ public class WebViewActivity extends BaseResultActivity {
 
         mSwipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mToolbar.setProgress(0);
-                mToolbar.setCanDrawProgress(true);
-                mWebView.reload();
-                //mProgressBar.setVisibility(View.VISIBLE);
-                //mProgressBar.setProgress(0);
-            }
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            mToolbar.setProgress(0);
+            mToolbar.setCanDrawProgress(true);
+            mWebView.reload();
+            //mProgressBar.setVisibility(View.VISIBLE);
+            //mProgressBar.setProgress(0);
         });
 
         mAppBarLayout = findViewById(R.id.view);
@@ -221,7 +217,7 @@ public class WebViewActivity extends BaseResultActivity {
     private void handleSendFile(Intent intent) {
         mWebSettings.setSupportZoom(false);
 
-        siteId = mUploadResult == null ? SearchEngine.SITE_SAUCENAO : mUploadResult.getEngineId();
+        int siteId = mUploadResult == null ? SearchEngine.SITE_SAUCENAO : mUploadResult.getEngineId();
         baseUrl = SITE_URL[siteId];
         mNormalMode = false;
 
@@ -308,27 +304,25 @@ public class WebViewActivity extends BaseResultActivity {
         return true;
     }
 
-    private void getPermission(String permission) {
-        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{permission}, REQUEST_CODE);
+    private void getPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    try {
-                        startDownload();
-                    } catch (NullPointerException npe) {
-                        npe.printStackTrace();
-                        Toast.makeText(getApplicationContext(), getString(R.string.something_wrong), Toast.LENGTH_SHORT).show();
-                    }
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                try {
+                    startDownload();
+                } catch (NullPointerException npe) {
+                    npe.printStackTrace();
+                    Toast.makeText(getApplicationContext(), getString(R.string.something_wrong), Toast.LENGTH_SHORT).show();
                 }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
@@ -370,20 +364,14 @@ public class WebViewActivity extends BaseResultActivity {
                     mContext.getString(R.string.file_overwrite),
                     fileName,
                     "Pictures/SearchByImage")));
-            mInfoBar.setNegativeButton(R.string.create_new_file, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mInfoBar.hide();
-                    downloadFile(uri, destinationFile);
-                }
+            mInfoBar.setNegativeButton(R.string.create_new_file, v -> {
+                mInfoBar.hide();
+                downloadFile(uri, destinationFile);
             });
-            mInfoBar.setPositiveButton(R.string.replace_file, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mInfoBar.hide();
-                    destinationFile.delete();
-                    downloadFile(uri, destinationFile);
-                }
+            mInfoBar.setPositiveButton(R.string.replace_file, v -> {
+                mInfoBar.hide();
+                destinationFile.delete();
+                downloadFile(uri, destinationFile);
             });
             mInfoBar.show();
         } else {
@@ -518,15 +506,12 @@ public class WebViewActivity extends BaseResultActivity {
         Snackbar snackbar = Snackbar.make(mCoordinatorLayout, String.format(getString(R.string.downloaded), fileName), Snackbar.LENGTH_LONG);
         snackbar.setActionTextColor(getResources().getColor(R.color.openAction));
 
-        snackbar.setAction(R.string.open, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(Intent.ACTION_VIEW);
-                intent1.setDataAndType(uri, "image/*");
-                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                IntentUtils.startOtherActivity(WebViewActivity.this, intent1);
-                notificationManager.cancel(fileName.hashCode());
-            }
+        snackbar.setAction(R.string.open, v -> {
+            Intent intent1 = new Intent(Intent.ACTION_VIEW);
+            intent1.setDataAndType(uri, "image/*");
+            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            IntentUtils.startOtherActivity(WebViewActivity.this, intent1);
+            notificationManager.cancel(fileName.hashCode());
         });
         snackbar.show();
     }
@@ -599,11 +584,7 @@ public class WebViewActivity extends BaseResultActivity {
             super.onPageFinished(webView, url);
 
             if (!toolBarVisibility) {
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        setToolBarVisibility(false);
-                    }
-                }, 1500);
+                new Handler().postDelayed(() -> setToolBarVisibility(false), 1500);
             }
 
             mToolbar.setTitle(webView.getTitle());
@@ -697,12 +678,7 @@ public class WebViewActivity extends BaseResultActivity {
                         mAnimator = ValueAnimator.ofInt(old, target);
                         mAnimator.setInterpolator(new LinearOutSlowInInterpolator());
                         mAnimator.setDuration(Math.round((float) Math.abs(target - old) / mAppBarLayout.getHeight() * 300));
-                        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator animation) {
-                                mBehavior.setTopAndBottomOffset((int) animation.getAnimatedValue());
-                            }
-                        });
+                        mAnimator.addUpdateListener(animation -> mBehavior.setTopAndBottomOffset((int) animation.getAnimatedValue()));
                         mAnimator.start();
                     }
 
@@ -725,7 +701,6 @@ public class WebViewActivity extends BaseResultActivity {
                 if (cursor.moveToFirst()) {
                     final String fileName = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE));
                     downloadSuccessful(fileName);
-
                 }
             }
         }

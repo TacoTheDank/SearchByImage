@@ -206,7 +206,7 @@ public class SearchEngine implements Observable {
      * @param parcelable engine need to add
      * @param id         engine id
      */
-    public static void addEngineToDb(SQLiteDatabase db, SearchEngineParcelable parcelable, int id) {
+    private static void addEngineToDb(SQLiteDatabase db, SearchEngineParcelable parcelable, int id) {
 
         ContentValues values = new ContentValues();
         values.put(CustomEngineTable.COLUMN_ID, id);
@@ -224,7 +224,7 @@ public class SearchEngine implements Observable {
         addEngineToList(data, sList);
     }
 
-    public static void addEngineToList(SearchEngine data, List<SearchEngine> list) {
+    private static void addEngineToList(SearchEngine data, List<SearchEngine> list) {
         list.add(data);
     }
 

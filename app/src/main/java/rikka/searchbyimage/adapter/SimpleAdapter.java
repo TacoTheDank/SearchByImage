@@ -1,7 +1,6 @@
 package rikka.searchbyimage.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 /**
  * Created by Rikka on 2017/1/22.
@@ -12,7 +11,7 @@ public abstract class SimpleAdapter<T, VH extends RecyclerView.ViewHolder> exten
     private OnItemClickListener mListener;
     private FilterAdapterHelper<T> mFilterAdapterHelper;
 
-    public SimpleAdapter() {
+    protected SimpleAdapter() {
         mFilterAdapterHelper = new FilterAdapterHelper<T>(this) {
             @Override
             public boolean contains(String key, T obj) {
@@ -33,12 +32,9 @@ public abstract class SimpleAdapter<T, VH extends RecyclerView.ViewHolder> exten
 
     @Override
     public void onBindViewHolder(final VH holder, int position) {
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.OnItemClick(holder.getAdapterPosition());
-                }
+        holder.itemView.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.OnItemClick(holder.getAdapterPosition());
             }
         });
     }

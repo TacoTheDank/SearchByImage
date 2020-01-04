@@ -11,12 +11,12 @@ import rikka.searchbyimage.staticdata.SearchEngine;
  * Created by Rikka on 2016/1/24.
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 3;
-    public static final String DATABASE_NAME = "search_engines.db";
+    private static final int DATABASE_VERSION = 3;
+    private static final String DATABASE_NAME = "search_engines.db";
 
     private static DatabaseHelper instance;
 
-    public DatabaseHelper(Context context) {
+    private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

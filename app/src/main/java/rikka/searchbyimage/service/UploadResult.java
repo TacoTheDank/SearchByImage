@@ -10,12 +10,7 @@ import android.os.Parcelable;
 public class UploadResult implements Parcelable {
 
     public final static int NO_ERROR = 0;
-    public final static int CANCELED = -1;
-    public final static int ERROR_FILE_NOT_FOUND = 1;
-    public final static int ERROR_UNKNOWN_HOST = 2;
-    public final static int ERROR_TIMEOUT = 3;
-    public final static int ERROR_IO = 4;
-    public final static int ERROR_UNKNOWN = 5;
+    public final static int CANCELLED = -1;
     public static final Parcelable.Creator<UploadResult> CREATOR = new Parcelable.Creator<UploadResult>() {
         @Override
         public UploadResult createFromParcel(Parcel in) {
@@ -27,6 +22,11 @@ public class UploadResult implements Parcelable {
             return new UploadResult[size];
         }
     };
+    final static int ERROR_FILE_NOT_FOUND = 1;
+    final static int ERROR_UNKNOWN_HOST = 2;
+    final static int ERROR_TIMEOUT = 3;
+    final static int ERROR_IO = 4;
+    final static int ERROR_UNKNOWN = 5;
     private final int mEngineId;
     private final String mFileUri;
     private final String mFilename;
@@ -36,7 +36,8 @@ public class UploadResult implements Parcelable {
     private final int mErrorCode;
     private final String mErrorMessage;
 
-    public UploadResult(int engineId, String fileUri, String filename, String url, String htmlUri, int resultOpenAction) {
+    UploadResult(int engineId, String fileUri, String filename, String url,
+                 String htmlUri, int resultOpenAction) {
         mEngineId = engineId;
         mFileUri = fileUri;
         mFilename = filename;
@@ -47,7 +48,7 @@ public class UploadResult implements Parcelable {
         mErrorMessage = null;
     }
 
-    public UploadResult(int errorCode, String errorMessage, UploadParam param) {
+    UploadResult(int errorCode, String errorMessage, UploadParam param) {
         mErrorCode = errorCode;
         mErrorMessage = errorMessage;
         mEngineId = param == null ? 0 : param.getEngineId();
@@ -58,7 +59,7 @@ public class UploadResult implements Parcelable {
         mResultOpenAction = 0;
     }
 
-    public UploadResult(Parcel in) {
+    private UploadResult(Parcel in) {
         mErrorCode = in.readInt();
         mErrorMessage = mErrorCode != 0 ? in.readString() : null;
         mEngineId = in.readInt();

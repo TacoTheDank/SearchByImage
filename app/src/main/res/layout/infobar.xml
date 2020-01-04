@@ -6,7 +6,8 @@
     android:layout_gravity="bottom|center_horizontal"
     android:background="@color/background"
     android:clickable="true"
-    android:elevation="12dp">
+    android:elevation="12dp"
+    android:focusable="true">
 
     <ImageButton
         android:id="@+id/infobar_close"

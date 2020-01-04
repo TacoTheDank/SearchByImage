@@ -83,7 +83,7 @@ public class BrowsersUtils {
         }
     }
 
-    public static void openWebView(Activity activity, Uri uri, boolean newTask, UploadResult result) {
+    private static void openWebView(Activity activity, Uri uri, boolean newTask, UploadResult result) {
         Intent intent = new Intent(activity, WebViewActivity.class);
         if (newTask) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -105,7 +105,7 @@ public class BrowsersUtils {
         }
     }
 
-    public static void openBrowserApp(Activity activity, Uri uri, boolean newTask) {
+    private static void openBrowserApp(Activity activity, Uri uri, boolean newTask) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         if (newTask) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

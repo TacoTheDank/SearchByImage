@@ -1,6 +1,5 @@
 package rikka.searchbyimage.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,25 +28,12 @@ public class SendReportActivity extends BaseActivity {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.app_crash_title)
                 .setMessage(R.string.app_crash_message)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        sendEmail(intent.getStringExtra(EXTRA_EMAIL_BODY));
-                        finish();
-                    }
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    sendEmail(intent.getStringExtra(EXTRA_EMAIL_BODY));
+                    finish();
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        finish();
-                    }
-                })
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> finish())
+                .setOnDismissListener(dialog -> finish())
                 .show();
     }
 

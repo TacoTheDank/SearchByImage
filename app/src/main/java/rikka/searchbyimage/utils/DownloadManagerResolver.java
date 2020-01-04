@@ -2,7 +2,6 @@ package rikka.searchbyimage.utils;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -56,12 +55,7 @@ public final class DownloadManagerResolver {
         messageTextView.setText(R.string.download_manager_disabled);
         return new AlertDialog.Builder(context)
                 .setView(messageTextView, 50, 30, 50, 30)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        enableDownloadManager(context);
-                    }
-                })
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> enableDownloadManager(context))
                 .setNegativeButton(android.R.string.cancel, null)
                 .setCancelable(false)
                 .create();

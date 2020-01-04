@@ -54,21 +54,15 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
                 .into(holder.mImageView);
 
         if (mOnItemClickListener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = holder.getLayoutPosition();
-                    mOnItemClickListener.onItemClick(holder.itemView, pos, mData.get(pos));
-                }
+            holder.itemView.setOnClickListener(v -> {
+                int pos = holder.getLayoutPosition();
+                mOnItemClickListener.onItemClick(holder.itemView, pos, mData.get(pos));
             });
 
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    int pos = holder.getLayoutPosition();
-                    mOnItemClickListener.onItemLongClick(holder.itemView, pos, mData.get(pos));
-                    return false;
-                }
+            holder.itemView.setOnLongClickListener(v -> {
+                int pos = holder.getLayoutPosition();
+                mOnItemClickListener.onItemLongClick(holder.itemView, pos, mData.get(pos));
+                return false;
             });
         }
     }
@@ -84,15 +78,15 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         void onItemLongClick(View view, int position, IqdbResultCollecter.IqdbItem item);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public RelativeLayout mView;
-        public TextView mTextViewURL;
-        public TextView mTextViewSize;
-        public TextView mTextViewSimilarity;
-        public ImageView mImageView;
+        RelativeLayout mView;
+        TextView mTextViewURL;
+        TextView mTextViewSize;
+        TextView mTextViewSimilarity;
+        ImageView mImageView;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
             mView = itemView.findViewById(R.id.view);

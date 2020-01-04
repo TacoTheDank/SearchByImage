@@ -9,7 +9,7 @@
 
         <Preference
             android:key="advance"
-            android:title="@string/custom_search_engine"></Preference>
+            android:title="@string/custom_search_engine" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -34,7 +34,7 @@
         <Preference
             android:key="contact"
             android:summary="@string/contact_detail"
-            android:title="@string/contact"></Preference>
+            android:title="@string/contact" />
 
         <Preference
             android:key="donate"

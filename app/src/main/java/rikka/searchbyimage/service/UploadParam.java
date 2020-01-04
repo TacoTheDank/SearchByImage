@@ -34,7 +34,9 @@ public class UploadParam implements Parcelable {
     private final List<Pair<String, String>> mBodies;
     private final int mResultOpenAction;
 
-    public UploadParam(int engineId, int type, String fileUri, String fileName, String url, String postFileKey, List<Pair<String, String>> headers, List<Pair<String, String>> bodies, int resultOpenAction) {
+    public UploadParam(int engineId, int type, String fileUri, String fileName, String url,
+                       String postFileKey, List<Pair<String, String>> headers,
+                       List<Pair<String, String>> bodies, int resultOpenAction) {
         mEngineId = engineId;
         mType = type;
         mFileUri = fileUri;
@@ -46,7 +48,7 @@ public class UploadParam implements Parcelable {
         mResultOpenAction = resultOpenAction;
     }
 
-    public UploadParam(Parcel in) {
+    private UploadParam(Parcel in) {
         mEngineId = in.readInt();
         mType = in.readInt();
         mFileUri = in.readString();
@@ -69,7 +71,7 @@ public class UploadParam implements Parcelable {
         mResultOpenAction = in.readInt();
     }
 
-    public int getEngineId() {
+    int getEngineId() {
         return mEngineId;
     }
 
@@ -77,11 +79,11 @@ public class UploadParam implements Parcelable {
         return mType;
     }
 
-    public String getFileUri() {
+    String getFileUri() {
         return mFileUri;
     }
 
-    public String getFilename() {
+    String getFilename() {
         return mFilename;
     }
 
@@ -89,7 +91,7 @@ public class UploadParam implements Parcelable {
         return mUrl;
     }
 
-    public String getPostFileKey() {
+    String getPostFileKey() {
         return mPostFileKey;
     }
 
@@ -97,11 +99,11 @@ public class UploadParam implements Parcelable {
         return mHeaders;
     }
 
-    public List<Pair<String, String>> getBodies() {
+    List<Pair<String, String>> getBodies() {
         return mBodies;
     }
 
-    public int getResultOpenAction() {
+    int getResultOpenAction() {
         return mResultOpenAction;
     }
 

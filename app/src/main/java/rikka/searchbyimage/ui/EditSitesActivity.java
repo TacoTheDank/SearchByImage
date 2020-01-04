@@ -3,7 +3,6 @@ package rikka.searchbyimage.ui;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -68,15 +67,10 @@ public class EditSitesActivity extends BaseActivity {
         mCoordinatorLayout = findViewById(R.id.coordinatorLayout);
 
         mFAB = findViewById(R.id.fab);
-        mFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(mActivity, EditSiteInfoActivity.class));
-            }
-        });
+        mFAB.setOnClickListener(view -> startActivity(new Intent(mActivity, EditSiteInfoActivity.class)));
 
-        /*
-        overscroll animation will disappear... OAQ
+/*
+        //overscroll animation will disappear... OAQ
         CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) mFAB.getLayoutParams();
         p.setBehavior(new FloatingActionButton.Behavior() {
             @Override
@@ -101,7 +95,8 @@ public class EditSitesActivity extends BaseActivity {
                 }
             }
         });
-        mFAB.setLayoutParams(p);*/
+        mFAB.setLayoutParams(p);
+*/
 
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
@@ -122,7 +117,8 @@ public class EditSitesActivity extends BaseActivity {
             }
         });
 
-        /*mRecyclerView.addItemDecoration(new BaseRecyclerViewItemDecoration(
+/*
+        mRecyclerView.addItemDecoration(new BaseRecyclerViewItemDecoration(
                 new ColorDrawable(ContextCompat.getColor(this, R.color.dividerSearchEngineList))) {
             int offsetLeft = Utils.dpToPx(48);
 
@@ -140,7 +136,9 @@ public class EditSitesActivity extends BaseActivity {
             public int getHeight() {
                 return 1;
             }
-        });*/
+        });
+*/
+
         ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         mAdapter.setOnItemClickListener(new SearchEngineAdapter.OnItemClickListener() {
             @Override
@@ -161,39 +159,29 @@ public class EditSitesActivity extends BaseActivity {
                 new AlertDialog.Builder(mActivity)
                         .setItems(
                                 new CharSequence[]{getString(R.string.delete)},
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        switch (which) {
-                                            case 0:
-                                                delete(item.getId());
+                                (dialog, which) -> {
+                                    if (which == 0) {
+                                        delete(item.getId());
 
-                                                mData.remove(position);
+                                        mData.remove(position);
 
+                                        mAdapter.notifyItemChanged(position - 1);
+                                        mAdapter.notifyItemRemoved(position);
+                                            /*if (mData.size() == (BuildConfig.hideOtherEngine ? 1 : 6)) {
+                                                mAdapter.notifyItemRangeRemoved(position - 1, 2);
+                                            } else {
                                                 mAdapter.notifyItemChanged(position - 1);
                                                 mAdapter.notifyItemRemoved(position);
-                                                /*if (mData.size() == (BuildConfig.hideOtherEngine ? 1 : 6)) {
-                                                    mAdapter.notifyItemRangeRemoved(position - 1, 2);
-                                                } else {
-                                                    mAdapter.notifyItemChanged(position - 1);
-                                                    mAdapter.notifyItemRemoved(position);
-                                                }*/
+                                            }*/
 
-                                                //Snackbar.make(mCoordinatorLayout, "Deleted", Snackbar.LENGTH_SHORT).show();
-                                                break;
-                                        }
+                                        //Snackbar.make(mCoordinatorLayout, "Deleted", Snackbar.LENGTH_SHORT).show();
                                     }
                                 })
                         .show();
             }
         });
 
-        mAdapter.setShowMessage(new SearchEngineAdapter.ShowMessage() {
-            @Override
-            public void showNoLessThanOne() {
-                Snackbar.make(mCoordinatorLayout, R.string.choose_one, Snackbar.LENGTH_LONG).show();
-            }
-        });
+        mAdapter.setShowMessage(() -> Snackbar.make(mCoordinatorLayout, R.string.choose_one, Snackbar.LENGTH_LONG).show());
     }
 
     private void delete(int id) {
@@ -205,10 +193,9 @@ public class EditSitesActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

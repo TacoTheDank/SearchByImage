@@ -25,7 +25,7 @@ public class InfoBar {
     private OnClickListener mPositiveButtonListener;
     private OnClickListener mNegativeButtonListener;*/
 
-    static final Interpolator FAST_OUT_SLOW_IN_INTERPOLATOR = new FastOutSlowInInterpolator();
+    private static final Interpolator FAST_OUT_SLOW_IN_INTERPOLATOR = new FastOutSlowInInterpolator();
 
     private static final int ANIMATION_DURATION = 250;
 
@@ -33,7 +33,6 @@ public class InfoBar {
     private Context mContext;
     private InfoBarLayout mView;
 
-    private ImageButton mCloseButton;
     private Button mPositiveButton;
     private Button mNegativeButton;
     private TextView mTextView;
@@ -46,13 +45,8 @@ public class InfoBar {
         mView = (InfoBarLayout) inflater.inflate(R.layout.infobar, mTargetParent, false);
         mView.setVisibility(View.GONE);
 
-        mCloseButton = mView.findViewById(R.id.infobar_close);
-        mCloseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hide();
-            }
-        });
+        ImageButton mCloseButton = mView.findViewById(R.id.infobar_close);
+        mCloseButton.setOnClickListener(v -> hide());
 
         mTextView = mView.findViewById(R.id.infobar_text);
 
@@ -150,12 +144,9 @@ public class InfoBar {
 
     public void show() {
         mView.setVisibility(View.VISIBLE);
-        mView.setOnLayoutChangeListener(new InfoBarLayout.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View view, int left, int top, int right, int bottom) {
-                animateViewIn();
-                mView.setOnLayoutChangeListener(null);
-            }
+        mView.setOnLayoutChangeListener((view, left, top, right, bottom) -> {
+            animateViewIn();
+            mView.setOnLayoutChangeListener(null);
         });
     }
 

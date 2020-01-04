@@ -154,7 +154,7 @@ public class SettingsFragment extends PreferenceFragment implements
 
         value = getPreferenceManager().getSharedPreferences().getString("search_engine_id", value);
 
-        mSearchEngine.setEntries(entries.toArray(new CharSequence[entries.size()]));
+        mSearchEngine.setEntries(entries.toArray(new CharSequence[0]));
         mSearchEngine.setEntryValues(entryValues.toArray(new CharSequence[entries.size()]));
 
         mSearchEngine.setValue(value);

@@ -1,6 +1,5 @@
 package rikka.searchbyimage.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -67,19 +66,16 @@ public class IqdbResultActivity extends BaseResultActivity {
                 new AlertDialog.Builder(IqdbResultActivity.this)
                         .setItems(
                                 new CharSequence[]{getString(R.string.open_with), getString(R.string.copy_link)},
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        switch (which) {
-                                            case 0:
-                                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.imageURL));
-                                                IntentUtils.startOtherActivity(IqdbResultActivity.this, intent);
-                                                break;
-                                            case 1:
-                                                ClipBoardUtils.putTextIntoClipboard(IqdbResultActivity.this, item.imageURL);
-                                                Toast.makeText(IqdbResultActivity.this, String.format(getString(R.string.copy_to_clipboard), item.imageURL), Toast.LENGTH_SHORT).show();
-                                                break;
-                                        }
+                                (dialog, which) -> {
+                                    switch (which) {
+                                        case 0:
+                                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.imageURL));
+                                            IntentUtils.startOtherActivity(IqdbResultActivity.this, intent);
+                                            break;
+                                        case 1:
+                                            ClipBoardUtils.putTextIntoClipboard(IqdbResultActivity.this, item.imageURL);
+                                            Toast.makeText(IqdbResultActivity.this, String.format(getString(R.string.copy_to_clipboard), item.imageURL), Toast.LENGTH_SHORT).show();
+                                            break;
                                     }
                                 })
                         .show();

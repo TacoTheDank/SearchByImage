@@ -82,7 +82,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:background="?attr/selectableItemBackground"
-                app:myTitle="@string/open_action"></rikka.searchbyimage.widget.DropDown>
+                app:myTitle="@string/open_action" />
 
             <TextView
                 android:id="@+id/post_form_title"
@@ -90,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/dropDown"
                 android:layout_marginTop="8dp"
+                android:paddingStart="20dp"
                 android:paddingLeft="20dp"
                 android:text="@string/post_form"
                 android:textSize="12sp" />
@@ -116,7 +117,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="0dp"
                     android:layout_marginRight="0dp"
                     android:layout_weight="1"
                     android:enabled="false"

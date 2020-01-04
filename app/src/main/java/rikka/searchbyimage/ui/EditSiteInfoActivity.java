@@ -106,26 +106,23 @@ public class EditSiteInfoActivity extends BaseActivity {
         mData = SearchEngine.getList(this);
 
         mFAB = findViewById(R.id.fab);
-        mFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!mEnabled) {
-                    onBackPressed();
-                }
-
-                if (!check()) {
-                    Snackbar.make(mCoordinatorLayout, R.string.check_your_data, Snackbar.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (mLocation == -1) {
-                    add();
-                } else {
-                    modify();
-                }
-
+        mFAB.setOnClickListener(view -> {
+            if (!mEnabled) {
                 onBackPressed();
             }
+
+            if (!check()) {
+                Snackbar.make(mCoordinatorLayout, R.string.check_your_data, Snackbar.LENGTH_LONG).show();
+                return;
+            }
+
+            if (mLocation == -1) {
+                add();
+            } else {
+                modify();
+            }
+
+            onBackPressed();
         });
 
         mRecyclerView = findViewById(R.id.recyclerView);
@@ -154,12 +151,9 @@ public class EditSiteInfoActivity extends BaseActivity {
                 mAdapter.notifyItemRemoved(viewHolder.getLayoutPosition());
                 mAdapter.setItemCount(mAdapter.getItemCount() - 1);
                 mLayoutManager.setFakeItemCount(1);
-                mCoordinatorLayout.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mLayoutManager.setFakeItemCount(0);
-                        mRecyclerView.requestLayout();
-                    }
+                mCoordinatorLayout.postDelayed(() -> {
+                    mLayoutManager.setFakeItemCount(0);
+                    mRecyclerView.requestLayout();
                 }, 500);
             }
         };
@@ -205,19 +199,9 @@ public class EditSiteInfoActivity extends BaseActivity {
             mRecyclerView.setAdapter(mAdapter);
         }
 
-        mEditTextFileKey.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                setFormTitleColor(hasFocus);
-            }
-        });
+        mEditTextFileKey.setOnFocusChangeListener((v, hasFocus) -> setFormTitleColor(hasFocus));
 
-        mAdapter.setOnFocusChangeListener(new PostFormAdapter.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                setFormTitleColor(hasFocus);
-            }
-        });
+        mAdapter.setOnFocusChangeListener((view, hasFocus) -> setFormTitleColor(hasFocus));
 
         mEditTextName.addTextChangedListener(new TextChangeRemoveErrorTextWatcher(mTextInputName));
         mEditTextUrl.addTextChangedListener(new TextChangeRemoveErrorTextWatcher(mTextInputUrl));
@@ -369,7 +353,7 @@ public class EditSiteInfoActivity extends BaseActivity {
     private class TextChangeRemoveErrorTextWatcher implements TextWatcher {
         TextInputLayout mTextInputLayout;
 
-        public TextChangeRemoveErrorTextWatcher(TextInputLayout textInputLayout) {
+        TextChangeRemoveErrorTextWatcher(TextInputLayout textInputLayout) {
             mTextInputLayout = textInputLayout;
         }
 

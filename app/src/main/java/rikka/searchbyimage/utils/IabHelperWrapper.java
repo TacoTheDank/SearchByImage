@@ -68,40 +68,38 @@ public class IabHelperWrapper implements IabBroadcastReceiver.IabBroadcastListen
         // Start setup. This is asynchronous and the specified listener
         // will be called once setup completes.
         Log.d(TAG, "Starting setup.");
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            public void onIabSetupFinished(IabResult result) {
-                Log.d(TAG, "Setup finished.");
+        mHelper.startSetup(result -> {
+            Log.d(TAG, "Setup finished.");
 
-                if (!result.isSuccess()) {
-                    // Oh noes, there was a problem.
-                    complain("Problem setting up in-app billing: " + result);
-                    isSuccess = false;
-                    return;
-                }
+            if (!result.isSuccess()) {
+                // Oh noes, there was a problem.
+                complain("Problem setting up in-app billing: " + result);
+                isSuccess = false;
+                return;
+            }
 
-                isSuccess = true;
+            isSuccess = true;
 
-                // Have we been disposed of in the meantime? If so, quit.
-                if (mHelper == null) return;
+            // Have we been disposed of in the meantime? If so, quit.
+            if (mHelper == null) return;
 
-                // Important: Dynamically register for broadcast messages about updated purchases.
-                // We register the receiver here instead of as a <receiver> in the Manifest
-                // because we always call getPurchases() at startup, so therefore we can ignore
-                // any broadcasts sent while the app isn't running.
-                // Note: registering this listener in an Activity is a bad idea, but is done here
-                // because this is a SAMPLE. Regardless, the receiver must be registered after
-                // IabHelper is setup, but before first call to getPurchases().
-                mBroadcastReceiver = new IabBroadcastReceiver(IabHelperWrapper.this);
-                IntentFilter broadcastFilter = new IntentFilter(IabBroadcastReceiver.ACTION);
-                mContext.registerReceiver(mBroadcastReceiver, broadcastFilter);
+            // Important: Dynamically register for broadcast messages about updated purchases.
+            // We register the receiver here instead of as a <receiver> in the Manifest
+            // because we always call getPurchases() at startup, so therefore we can ignore
+            // any broadcasts sent while the app isn't running.
+            // Note: registering this listener in an Activity is a bad idea, but is done here
+            // because this is a SAMPLE. Regardless, the receiver must be registered after
+            // IabHelper is setup, but before first call to getPurchases().
+            mBroadcastReceiver = new IabBroadcastReceiver(IabHelperWrapper.this);
+            IntentFilter broadcastFilter = new IntentFilter(IabBroadcastReceiver.ACTION);
+            mContext.registerReceiver(mBroadcastReceiver, broadcastFilter);
 
-                // IAB is fully set up. Now, let's get an inventory of stuff we own.
-                Log.d(TAG, "Setup successful. Querying inventory.");
-                try {
-                    mHelper.queryInventoryAsync(new QueryInventoryFinishedCallback(mOnQueryInventoryFinishedListener));
-                } catch (IabHelper.IabAsyncInProgressException e) {
-                    complain("Error querying inventory. Another async operation in progress.");
-                }
+            // IAB is fully set up. Now, let's get an inventory of stuff we own.
+            Log.d(TAG, "Setup successful. Querying inventory.");
+            try {
+                mHelper.queryInventoryAsync(new QueryInventoryFinishedCallback(mOnQueryInventoryFinishedListener));
+            } catch (IabHelper.IabAsyncInProgressException e) {
+                complain("Error querying inventory. Another async operation in progress.");
             }
         });
     }
@@ -216,7 +214,7 @@ public class IabHelperWrapper implements IabBroadcastReceiver.IabBroadcastListen
 
         private OnQueryInventoryFinishedListener mOnQueryInventoryFinishedListener;
 
-        public QueryInventoryFinishedCallback(OnQueryInventoryFinishedListener onQueryInventoryFinishedListener) {
+        QueryInventoryFinishedCallback(OnQueryInventoryFinishedListener onQueryInventoryFinishedListener) {
             mOnQueryInventoryFinishedListener = onQueryInventoryFinishedListener;
         }
 

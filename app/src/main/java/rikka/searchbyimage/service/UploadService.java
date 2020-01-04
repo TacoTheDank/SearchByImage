@@ -99,7 +99,8 @@ public class UploadService extends Service {
         return mUploadBinder;
     }
 
-    /*@Override
+/*
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("Service", "onStartCommand");
         return super.onStartCommand(intent, flags, startId);
@@ -115,7 +116,8 @@ public class UploadService extends Service {
     public void onRebind(Intent intent) {
         super.onRebind(intent);
         Log.d("Service", "onRebind");
-    }*/
+    }
+*/
 
     private void removeTask() {
         for (String key : mTasks.keySet()) {
@@ -127,7 +129,7 @@ public class UploadService extends Service {
                 task.mCanceled = true;
                 mTasks.remove(key);
 
-                task.onTaskFinished(true, task.mKey, new UploadResult(UploadResult.CANCELED, "canceled", null));
+                task.onTaskFinished(true, task.mKey, new UploadResult(UploadResult.CANCELLED, "canceled", null));
             }
         }
 
@@ -194,7 +196,7 @@ public class UploadService extends Service {
         private String mFileUri;
         private boolean mCanceled;
 
-        public UploadTask(Context context, String key) {
+        UploadTask(Context context, String key) {
             mContext = context;
             mKey = key;
         }
@@ -324,8 +326,6 @@ public class UploadService extends Service {
                     break;
                 case SITE_IQDB:
                 case SITE_SAUCENAO:
-                    html = Utils.streamToCacheFile(mContext, response.body().byteStream(), "html", htmlFilename);
-                    break;
                 default:
                     html = Utils.streamToCacheFile(mContext, response.body().byteStream(), "html", htmlFilename);
                     break;
@@ -367,7 +367,7 @@ public class UploadService extends Service {
             intent.putExtra(EXTRA_KEY, key);
 
             if (!LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent)
-                    && result.getErrorCode() != UploadResult.CANCELED
+                    && result.getErrorCode() != UploadResult.CANCELLED
                     && !canceled) {
                 sendBroadcast(intent);
             }

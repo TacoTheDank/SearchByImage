@@ -18,7 +18,7 @@
     <string name="search_engine">Search engine</string>
     <string name="safe_search">Safe search</string>
     <string name="about">About</string>
-    <string name="open_source">Open source</string>
+    <string name="open_source">Open-source</string>
     <string name="general">General</string>
     <string name="rate">Rate me</string>
     <string name="rate_summary">I\'ll be happy if you rate me 5 stars</string>
@@ -60,9 +60,9 @@
     <string name="try_resize_image_if_error">Try this if upload error</string>
     <string name="start_upload">Start upload</string>
 
-    <string name="permission_require">Permission require</string>
-    <string name="permission_require_detail">It seems the application need READ_EXTERNAL_STORAGE permission to upload file.</string>
-    <string name="get_permission">get permission</string>
+    <string name="permission_require">Permission requirement</string>
+    <string name="permission_require_detail">It seems the application needs READ_EXTERNAL_STORAGE permission to upload files.</string>
+    <string name="get_permission">Get permission</string>
 
     <string name="donate">Donate</string>
     <string name="donate_summary">Alipay: rikka@xing.moe</string>
@@ -95,7 +95,7 @@
     <string name="refresh">Refresh</string>
     <string name="copy_link">Copy link</string>
     <string name="open_in_browser">Open in browser app</string>
-    <string name="copy_to_clipboard">%s copied to clipboard.</string>
+    <string name="copy_to_clipboard">%s copied to clipboard</string>
 
     <string name="replace_file">replace file</string>
     <string name="create_new_file">create new file</string>
@@ -109,13 +109,13 @@
     <string name="send_via">Send via</string>
 
     <string name="app_crash_title">App crashed…</string>
-    <string name="app_crash_message">Send the crash log to app developer with mail app to help fix the bug.</string>
+    <string name="app_crash_message">Send the crash log to the app developer with a mail app to help fix the bug.</string>
     <string name="app_crash_no_email_client">No mail app installed</string>
     <string name="baidu_settings">Baidu settings</string>
 
     <string name="edit_sites">Search engines</string>
     <string name="edit_site">Edit data</string>
-    <string name="request_url">Request url</string>
+    <string name="request_url">Request URL</string>
     <string name="engine_name">Name</string>
     <string name="upload_form_key">Key</string>
     <string name="upload_form_value">Value</string>
@@ -139,21 +139,21 @@
     <string name="post_form">Form</string>
     <string name="not_empty">Should not be empty</string>
 
-    <string name="invalid_web_url">Url is invalid</string>
+    <string name="invalid_web_url">URL is invalid</string>
     <string name="target_app_not_found">Don\'t have apps to handle this action.</string>
     <string name="file_not_found">File not found.\nPlease try again.</string>
 
     <string name="upload_failed">Upload failed</string>
     <string name="contact">Contact me</string>
     <string name="contact_detail">If you meet problems, please contact me</string>
-    <string name="no_chrome_available">Use WebView due to no available Chrome installed</string>
+    <string name="no_chrome_available">No available Chrome app installed; use a WebView instead.</string>
     <string name="no_webview">WebView not installed on your device.</string>
-    <string name="webview_version_error">WebView version is incorrect, please reinstall webview in Google Play.</string>
-    <string name="download_manager_disabled">DownloadManager is disabled. Please enable it.</string>
+    <string name="webview_version_error">WebView version is incorrect, please reinstall WebView in Google Play.</string>
+    <string name="download_manager_disabled">Download Manager is disabled. Please enable it.</string>
 
     <plurals name="uploading_notification">
-        <item quantity="one">Uploading %d image</item>
-        <item quantity="other">Uploading %d images</item>
+        <item quantity="one">Uploading %d image…</item>
+        <item quantity="other">Uploading %d images…</item>
     </plurals>
     <string name="upload_select_engine">Select a search engine</string>
     <string name="upload_start">Start upload</string>
@@ -163,11 +163,11 @@
     <string name="upload_require_permission">Require permission</string>
     <string name="upload_permission_denied">Permission denied</string>
     <string name="upload_get_image_error">Error getting image</string>
-    <string name="upload_engine_not_exist">Engine not exist</string>
+    <string name="upload_engine_not_exist">Engine doesn\'t exist</string>
     <string name="upload_working">Uploading and waiting for response…</string>
 
-    <string name="settings_notify_background">Notify when background</string>
-    <string name="settings_notify_background_summary">Notify instead of directly open result when upload background</string>
+    <string name="settings_notify_background">Notify in background</string>
+    <string name="settings_notify_background_summary">Notify instead of directly opening result when uploading in background</string>
 
     <string name="night_mode">Night mode</string>
     <string name="night_mode_off">Off</string>
@@ -178,7 +178,7 @@
     <string name="pay_gp">Google Play</string>
     <string name="pay_alipay">Alipay</string>
     <string name="donate_text">Do you find this app useful?\nSupport developer by sending donation to the developer!</string>
-    <string name="pay_gp_set_up_failed">Setting up in-app billing failed, maybe you haven\'t signed in your Google account or Google Play Store is not installed properly.</string>
+    <string name="pay_gp_set_up_failed">Setting up in-app billing failed; maybe you haven\'t signed in your Google account, or Google Play Store is not installed properly.</string>
     <string name="donate_thanks">Thank you for your support!</string>
     <string name="donate_play_required">Require Google Play version.</string>
 
@@ -187,15 +187,15 @@
     <string name="shortcut_upload_disabled">Upload</string>
 
     <string name="donate_request">Do you enjoy using this app?</string>
-    <string name="donate_request_1_message">Would like to send donation to the developer as support?</string>
-    <string name="donate_request_2_message">Can you tell why don\'t like it?</string>
+    <string name="donate_request_1_message">Would you like to send a donation to the developer as support?</string>
+    <string name="donate_request_2_message">Could you tell me why don\'t like it?</string>
     <string name="donate_request_1_yes">Yes, bring me there!</string>
     <string name="donate_request_1_no">No, maybe later.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="not_like_1">I can\'t get the result I want.</string>
-    <string name="not_like_1_message">I\'m sorry I can\'t help. The result is controlled by search engine you select.\nIt\'s harder if you want to get result related to the thing in the image.</string>
-    <string name="not_like_2">I meet some bug.</string>
+    <string name="not_like_1_message">I\'m sorry I can\'t help. The result is controlled by the search engine you select.\nIt\'s harder if you want to get results related to the thing in the image.</string>
+    <string name="not_like_2">I ran into some bug.</string>
     <string name="not_like_2_message">Do you want to send feedback to the developer?</string>
     <string name="not_like_3">I want to send feedback.</string>
     <string name="send_feedback">Send feedback</string>
