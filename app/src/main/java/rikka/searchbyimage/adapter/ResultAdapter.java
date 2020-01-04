@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
@@ -47,11 +49,14 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
         holder.mTextViewSize.setText(item.size);
         holder.mTextViewSimilarity.setText(item.similarity);
 
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher);
+
         Glide.with(holder.mImageView.getContext())
                 .load(item.thumbnailURL)
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
-                .crossFade()
+                .apply(options)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.mImageView);
 
         if (mOnItemClickListener != null) {

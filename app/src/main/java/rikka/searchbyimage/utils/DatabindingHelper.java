@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 /**
  * Created by Yulan on 2016/1/30.
@@ -16,7 +17,7 @@ public class DatabindingHelper {
     public static void setimageUrl(ImageView imageView, String imageUrl) {
         Glide.with(imageView.getContext())
                 .load(imageUrl)
-                .crossFade()
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
     }
 
