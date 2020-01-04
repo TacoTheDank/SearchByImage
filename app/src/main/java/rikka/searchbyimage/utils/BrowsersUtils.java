@@ -7,10 +7,11 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.customtabs.CustomTabsIntent;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
+
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
 
 import rikka.searchbyimage.R;
 import rikka.searchbyimage.receiver.ShareBroadcastReceiver;

@@ -1,6 +1,6 @@
 package rikka.searchbyimage.adapter;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by Rikka on 2017/1/22.

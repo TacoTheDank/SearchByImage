@@ -104,7 +104,7 @@
                         tools:text="http://example.org" />
                 </LinearLayout>
 
-                <android.support.v7.widget.SwitchCompat
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_site_enabled"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

@@ -4,9 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import rikka.searchbyimage.R;
 import rikka.searchbyimage.utils.Utils;
@@ -29,7 +30,7 @@ public class WebViewToolBar extends Toolbar {
     }
 
     public WebViewToolBar(Context context, AttributeSet attrs) {
-        this(context, attrs, android.support.v7.appcompat.R.attr.toolbarStyle);
+        this(context, attrs, androidx.appcompat.R.attr.toolbarStyle);
     }
 
     public WebViewToolBar(Context context, AttributeSet attrs, int defStyleAttr) {

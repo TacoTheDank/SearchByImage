@@ -2,7 +2,8 @@ package rikka.searchbyimage.service;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.util.Pair;
+
+import androidx.core.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;

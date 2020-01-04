@@ -1,6 +1,6 @@
 package rikka.searchbyimage;
 
-import android.support.v7.app.AppCompatDelegate;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import rikka.searchbyimage.staticdata.SearchEngine;
 import rikka.searchbyimage.support.Settings;

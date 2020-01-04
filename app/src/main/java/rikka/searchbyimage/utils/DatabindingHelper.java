@@ -1,8 +1,9 @@
 package rikka.searchbyimage.utils;
 
-import android.databinding.BindingAdapter;
-import android.support.v7.widget.SwitchCompat;
 import android.widget.ImageView;
+
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
 

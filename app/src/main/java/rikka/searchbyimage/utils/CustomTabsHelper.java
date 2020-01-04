@@ -9,9 +9,10 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
-import android.support.customtabs.CustomTabsService;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.browser.customtabs.CustomTabsService;
 
 import java.util.ArrayList;
 import java.util.List;

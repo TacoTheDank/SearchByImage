@@ -2,7 +2,6 @@ package rikka.searchbyimage.widget;
 
 import android.animation.Animator;
 import android.content.Context;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,8 @@ import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import rikka.searchbyimage.R;
 import rikka.searchbyimage.view.InfoBarLayout;

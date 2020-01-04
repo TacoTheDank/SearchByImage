@@ -11,11 +11,12 @@ import android.os.Build;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.service.notification.StatusBarNotification;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 import android.util.JsonReader;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
 import java.io.IOException;
 import java.io.InputStream;

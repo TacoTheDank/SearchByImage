@@ -1,8 +1,9 @@
 package rikka.searchbyimage.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collection;
