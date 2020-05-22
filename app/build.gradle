@@ -5,6 +5,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
+        applicationId "taco.searchbyimage"
         minSdkVersion 16
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 25
@@ -23,11 +24,9 @@ android {
     flavorDimensions "source"
     productFlavors {
         coolapk {
-            applicationId "rikka.searchbyimage"
             buildConfigField "boolean", "hideOtherEngine", "false"
         }
         google {
-            applicationId "rikka.searchbyimage2"
             versionNameSuffix "-play"
             buildConfigField "boolean", "hideOtherEngine", "true"
         }
@@ -90,7 +89,7 @@ dependencies {
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
     //https://github.com/tbruyelle/RxPermissions/releases
-    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar'
+    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
 
     //https://github.com/RikkaW/MaterialPreference
     implementation 'com.github.RikkaW:MaterialPreference:v1.4.4'

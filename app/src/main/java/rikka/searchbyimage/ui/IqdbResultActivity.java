@@ -22,7 +22,7 @@ import rikka.searchbyimage.adapter.ResultAdapter;
 import rikka.searchbyimage.utils.BrowsersUtils;
 import rikka.searchbyimage.utils.ClipBoardUtils;
 import rikka.searchbyimage.utils.IntentUtils;
-import rikka.searchbyimage.utils.IqdbResultCollecter;
+import rikka.searchbyimage.utils.IqdbResultCollector;
 
 public class IqdbResultActivity extends BaseResultActivity {
 
@@ -37,7 +37,7 @@ public class IqdbResultActivity extends BaseResultActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        ArrayList<IqdbResultCollecter.IqdbItem> list;
+        ArrayList<IqdbResultCollector.IqdbItem> list;
 
         if (!getIntent().hasExtra(EXTRA_FILE)) {
             finish();
@@ -58,12 +58,12 @@ public class IqdbResultActivity extends BaseResultActivity {
         mAdapter.setOnItemClickListener(new ResultAdapter.OnItemClickListener() {
 
             @Override
-            public void onItemClick(View view, int position, IqdbResultCollecter.IqdbItem item) {
+            public void onItemClick(View view, int position, IqdbResultCollector.IqdbItem item) {
                 BrowsersUtils.open(IqdbResultActivity.this, item.imageURL);
             }
 
             @Override
-            public void onItemLongClick(View view, int position, final IqdbResultCollecter.IqdbItem item) {
+            public void onItemLongClick(View view, int position, final IqdbResultCollector.IqdbItem item) {
                 new AlertDialog.Builder(IqdbResultActivity.this)
                         .setItems(
                                 new CharSequence[]{getString(R.string.open_with), getString(R.string.copy_link)},
@@ -91,7 +91,7 @@ public class IqdbResultActivity extends BaseResultActivity {
         super.onNewIntent(intent);
     }
 
-    private ArrayList<IqdbResultCollecter.IqdbItem> loadSearchResult(String htmlFilePath) {
+    private ArrayList<IqdbResultCollector.IqdbItem> loadSearchResult(String htmlFilePath) {
         File file = new File(htmlFilePath);
 
         BufferedInputStream fileStream = null;
@@ -115,6 +115,6 @@ public class IqdbResultActivity extends BaseResultActivity {
                 }
         }
 
-        return IqdbResultCollecter.getItemList(sb.toString());
+        return IqdbResultCollector.getItemList(sb.toString());
     }
 }

@@ -7,9 +7,9 @@ import android.os.Parcelable;
  * Created by Rikka on 2016/1/24.
  */
 public class ParcelableUtils {
-    public static byte[] marshall(Parcelable parceable) {
+    public static byte[] marshall(Parcelable parcelable) {
         Parcel parcel = Parcel.obtain();
-        parceable.writeToParcel(parcel, 0);
+        parcelable.writeToParcel(parcel, 0);
         byte[] bytes = parcel.marshall();
         parcel.recycle(); // not sure if needed or a good idea
         return bytes;

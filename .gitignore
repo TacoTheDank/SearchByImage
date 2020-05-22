@@ -7,3 +7,5 @@ captures/
 *.apk
 .idea/
 google-services.json
+app/release/
+app/debug/

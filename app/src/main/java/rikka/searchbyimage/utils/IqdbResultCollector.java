@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Rikka on 2015/12/20.
  */
-public class IqdbResultCollecter {
+public class IqdbResultCollector {
     private static final String[] FIND_HEAD = {
             "<div><table><tr><th>Best match</th></tr>",
             "<div><table><tr><th>Additional match</th></tr>",

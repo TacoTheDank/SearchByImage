@@ -41,7 +41,7 @@ public class SearchEngine implements Observable {
     public final static int SITE_CUSTOM_START = 6;
     private static final String[] BUILD_IN_ENGINE_URL = {
             "https://www.google.com/searchbyimage/upload",
-            "http://image.baidu.com/pictureup/uploadwise",
+            "http://image.baidu.com/search/index",
             "https://iqdb.org/",
             "https://www.tineye.com/search",
             "https://saucenao.com/search.php",
@@ -57,7 +57,7 @@ public class SearchEngine implements Observable {
     };
     private static final String[] BUILD_IN_ENGINE_FILE_KEY = {
             "encoded_image",
-            "upload",
+            "image",
             "file",
             "image",
             "file",

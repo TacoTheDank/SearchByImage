@@ -1,5 +1,7 @@
 package rikka.searchbyimage;
 
+import android.app.Application;
+
 import androidx.appcompat.app.AppCompatDelegate;
 
 import rikka.searchbyimage.staticdata.SearchEngine;
@@ -8,7 +10,7 @@ import rikka.searchbyimage.support.Settings;
 /**
  * Created by Rikka on 2015/12/31.
  */
-public class Application extends android.app.Application {
+public class App extends Application {
 
     @Override
     public void onCreate() {

@@ -16,18 +16,18 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.ArrayList;
 
 import rikka.searchbyimage.R;
-import rikka.searchbyimage.utils.IqdbResultCollecter;
+import rikka.searchbyimage.utils.IqdbResultCollector;
 
 /**
  * Created by Rikka on 2015/12/20.
  */
 public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder> {
 
-    private ArrayList<IqdbResultCollecter.IqdbItem> mData;
+    private ArrayList<IqdbResultCollector.IqdbItem> mData;
     private int mCount = 0;
     private OnItemClickListener mOnItemClickListener;
 
-    public ResultAdapter(ArrayList<IqdbResultCollecter.IqdbItem> mData) {
+    public ResultAdapter(ArrayList<IqdbResultCollector.IqdbItem> mData) {
         this.mData = mData;
         this.mCount = mData.size();
     }
@@ -44,7 +44,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        IqdbResultCollecter.IqdbItem item = mData.get(position);
+        IqdbResultCollector.IqdbItem item = mData.get(position);
         holder.mTextViewURL.setText(item.imageURL);
         holder.mTextViewSize.setText(item.size);
         holder.mTextViewSimilarity.setText(item.similarity);
@@ -79,9 +79,9 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view, int position, IqdbResultCollecter.IqdbItem item);
+        void onItemClick(View view, int position, IqdbResultCollector.IqdbItem item);
 
-        void onItemLongClick(View view, int position, IqdbResultCollecter.IqdbItem item);
+        void onItemLongClick(View view, int position, IqdbResultCollector.IqdbItem item);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

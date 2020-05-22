@@ -85,7 +85,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         sb.append(sw.toString());
 
 
-        /*((Application) mContext.getApplicationContext()).getDefaultTracker()
+        /*((App) mContext.getApplicationContext()).getDefaultTracker()
                 .send(new HitBuilders.ExceptionBuilder()
                         .setDescription(new StandardExceptionParser(mContext, null)
                                 .getDescription(thread.getName(), throwable))
